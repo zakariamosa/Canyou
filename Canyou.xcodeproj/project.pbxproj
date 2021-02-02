@@ -15,6 +15,10 @@
 		1CC85CC325C953EB009B068A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CC85CC125C953EB009B068A /* LaunchScreen.storyboard */; };
 		1CC85CCE25C953EB009B068A /* CanyouTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC85CCD25C953EB009B068A /* CanyouTests.swift */; };
 		1CC85CD925C953EB009B068A /* CanyouUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC85CD825C953EB009B068A /* CanyouUITests.swift */; };
+		1CC85CEA25C95406009B068A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CC85CE925C95406009B068A /* GoogleService-Info.plist */; };
+		242D99FC28C01D7927DB3899 /* Pods_Canyou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE4C420720495D1145DECB69 /* Pods_Canyou.framework */; };
+		8B68CF9F9E65112979129AB6 /* Pods_CanyouTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAD5F209CE86184890B373D /* Pods_CanyouTests.framework */; };
+		8E00A626328E9E96C572E59B /* Pods_Canyou_CanyouUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE47BCE204FCD47257E13445 /* Pods_Canyou_CanyouUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0123322E6C7005FD613C0FF0 /* Pods-Canyou-CanyouUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canyou-CanyouUITests.release.xcconfig"; path = "Target Support Files/Pods-Canyou-CanyouUITests/Pods-Canyou-CanyouUITests.release.xcconfig"; sourceTree = "<group>"; };
+		13285EAF1B046C1B4449C153 /* Pods-Canyou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canyou.release.xcconfig"; path = "Target Support Files/Pods-Canyou/Pods-Canyou.release.xcconfig"; sourceTree = "<group>"; };
 		1CC85CB325C953E9009B068A /* Canyou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Canyou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CC85CB625C953E9009B068A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CC85CB825C953E9009B068A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +55,14 @@
 		1CC85CD425C953EB009B068A /* CanyouUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CanyouUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CC85CD825C953EB009B068A /* CanyouUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanyouUITests.swift; sourceTree = "<group>"; };
 		1CC85CDA25C953EB009B068A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CC85CE925C95406009B068A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7CAD5F209CE86184890B373D /* Pods_CanyouTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanyouTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CD45A04BA88BDC1DC67026B /* Pods-CanyouTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanyouTests.release.xcconfig"; path = "Target Support Files/Pods-CanyouTests/Pods-CanyouTests.release.xcconfig"; sourceTree = "<group>"; };
+		9B22B48B20221DE8763E1181 /* Pods-Canyou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canyou.debug.xcconfig"; path = "Target Support Files/Pods-Canyou/Pods-Canyou.debug.xcconfig"; sourceTree = "<group>"; };
+		BE47BCE204FCD47257E13445 /* Pods_Canyou_CanyouUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Canyou_CanyouUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED9D276CD80B936FAC9D5867 /* Pods-Canyou-CanyouUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canyou-CanyouUITests.debug.xcconfig"; path = "Target Support Files/Pods-Canyou-CanyouUITests/Pods-Canyou-CanyouUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EE4C420720495D1145DECB69 /* Pods_Canyou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Canyou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF4A1102CC9B5D3C694E07F2 /* Pods-CanyouTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanyouTests.debug.xcconfig"; path = "Target Support Files/Pods-CanyouTests/Pods-CanyouTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				242D99FC28C01D7927DB3899 /* Pods_Canyou.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B68CF9F9E65112979129AB6 /* Pods_CanyouTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E00A626328E9E96C572E59B /* Pods_Canyou_CanyouUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +100,8 @@
 				1CC85CCC25C953EB009B068A /* CanyouTests */,
 				1CC85CD725C953EB009B068A /* CanyouUITests */,
 				1CC85CB425C953E9009B068A /* Products */,
+				A889AC908743538ED454F235 /* Pods */,
+				BB2EFB8634BDAC459A095AE0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +118,7 @@
 		1CC85CB525C953E9009B068A /* Canyou */ = {
 			isa = PBXGroup;
 			children = (
+				1CC85CE925C95406009B068A /* GoogleService-Info.plist */,
 				1CC85CB625C953E9009B068A /* AppDelegate.swift */,
 				1CC85CB825C953E9009B068A /* SceneDelegate.swift */,
 				1CC85CBA25C953E9009B068A /* ContentView.swift */,
@@ -136,6 +156,30 @@
 			path = CanyouUITests;
 			sourceTree = "<group>";
 		};
+		A889AC908743538ED454F235 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9B22B48B20221DE8763E1181 /* Pods-Canyou.debug.xcconfig */,
+				13285EAF1B046C1B4449C153 /* Pods-Canyou.release.xcconfig */,
+				ED9D276CD80B936FAC9D5867 /* Pods-Canyou-CanyouUITests.debug.xcconfig */,
+				0123322E6C7005FD613C0FF0 /* Pods-Canyou-CanyouUITests.release.xcconfig */,
+				FF4A1102CC9B5D3C694E07F2 /* Pods-CanyouTests.debug.xcconfig */,
+				7CD45A04BA88BDC1DC67026B /* Pods-CanyouTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		BB2EFB8634BDAC459A095AE0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EE4C420720495D1145DECB69 /* Pods_Canyou.framework */,
+				BE47BCE204FCD47257E13445 /* Pods_Canyou_CanyouUITests.framework */,
+				7CAD5F209CE86184890B373D /* Pods_CanyouTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,9 +187,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1CC85CDD25C953EB009B068A /* Build configuration list for PBXNativeTarget "Canyou" */;
 			buildPhases = (
+				92C0A4E4C400356475C9D41A /* [CP] Check Pods Manifest.lock */,
 				1CC85CAF25C953E9009B068A /* Sources */,
 				1CC85CB025C953E9009B068A /* Frameworks */,
 				1CC85CB125C953E9009B068A /* Resources */,
+				FCF06329C3F88436D2FA0BE3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -160,6 +206,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1CC85CE025C953EB009B068A /* Build configuration list for PBXNativeTarget "CanyouTests" */;
 			buildPhases = (
+				DE444D79E36656A6F177ABD0 /* [CP] Check Pods Manifest.lock */,
 				1CC85CC525C953EB009B068A /* Sources */,
 				1CC85CC625C953EB009B068A /* Frameworks */,
 				1CC85CC725C953EB009B068A /* Resources */,
@@ -178,9 +225,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1CC85CE325C953EB009B068A /* Build configuration list for PBXNativeTarget "CanyouUITests" */;
 			buildPhases = (
+				ACDDEE26B557B8F7F6A10B62 /* [CP] Check Pods Manifest.lock */,
 				1CC85CD025C953EB009B068A /* Sources */,
 				1CC85CD125C953EB009B068A /* Frameworks */,
 				1CC85CD225C953EB009B068A /* Resources */,
+				C22D8738624DC7936C56048D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -240,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CC85CC325C953EB009B068A /* LaunchScreen.storyboard in Resources */,
+				1CC85CEA25C95406009B068A /* GoogleService-Info.plist in Resources */,
 				1CC85CC025C953EB009B068A /* Preview Assets.xcassets in Resources */,
 				1CC85CBD25C953EB009B068A /* Assets.xcassets in Resources */,
 			);
@@ -260,6 +310,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		92C0A4E4C400356475C9D41A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Canyou-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACDDEE26B557B8F7F6A10B62 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Canyou-CanyouUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C22D8738624DC7936C56048D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Canyou-CanyouUITests/Pods-Canyou-CanyouUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Canyou-CanyouUITests/Pods-Canyou-CanyouUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Canyou-CanyouUITests/Pods-Canyou-CanyouUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE444D79E36656A6F177ABD0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CanyouTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FCF06329C3F88436D2FA0BE3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Canyou/Pods-Canyou-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Canyou/Pods-Canyou-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Canyou/Pods-Canyou-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1CC85CAF25C953E9009B068A /* Sources */ = {
@@ -433,6 +586,7 @@
 		};
 		1CC85CDE25C953EB009B068A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B22B48B20221DE8763E1181 /* Pods-Canyou.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -453,6 +607,7 @@
 		};
 		1CC85CDF25C953EB009B068A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13285EAF1B046C1B4449C153 /* Pods-Canyou.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -473,6 +628,7 @@
 		};
 		1CC85CE125C953EB009B068A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF4A1102CC9B5D3C694E07F2 /* Pods-CanyouTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -494,6 +650,7 @@
 		};
 		1CC85CE225C953EB009B068A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CD45A04BA88BDC1DC67026B /* Pods-CanyouTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -515,6 +672,7 @@
 		};
 		1CC85CE425C953EB009B068A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED9D276CD80B936FAC9D5867 /* Pods-Canyou-CanyouUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -534,6 +692,7 @@
 		};
 		1CC85CE525C953EB009B068A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0123322E6C7005FD613C0FF0 /* Pods-Canyou-CanyouUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
