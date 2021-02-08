@@ -3,10 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C0D9E0225CC09B500100D99 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0D9E0125CC09B500100D99 /* Task.swift */; };
+		1C5ECF8625CD5DE500112B1C /* Registeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5ECF8525CD5DE500112B1C /* Registeration.swift */; };
+		1C61831325D163FE00D6463F /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C61831225D163FE00D6463F /* Tasks.swift */; };
+		1C65923025D1B9B300E8F296 /* TheTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C65922F25D1B9B300E8F296 /* TheTask.swift */; };
+		1C85D63225C9E1B50017B240 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C85D63125C9E1B50017B240 /* Home.swift */; };
 		1CC85CB725C953E9009B068A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC85CB625C953E9009B068A /* AppDelegate.swift */; };
 		1CC85CB925C953E9009B068A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC85CB825C953E9009B068A /* SceneDelegate.swift */; };
 		1CC85CBB25C953E9009B068A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC85CBA25C953E9009B068A /* ContentView.swift */; };
@@ -41,6 +46,11 @@
 /* Begin PBXFileReference section */
 		0123322E6C7005FD613C0FF0 /* Pods-Canyou-CanyouUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canyou-CanyouUITests.release.xcconfig"; path = "Target Support Files/Pods-Canyou-CanyouUITests/Pods-Canyou-CanyouUITests.release.xcconfig"; sourceTree = "<group>"; };
 		13285EAF1B046C1B4449C153 /* Pods-Canyou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canyou.release.xcconfig"; path = "Target Support Files/Pods-Canyou/Pods-Canyou.release.xcconfig"; sourceTree = "<group>"; };
+		1C0D9E0125CC09B500100D99 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		1C5ECF8525CD5DE500112B1C /* Registeration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registeration.swift; sourceTree = "<group>"; };
+		1C61831225D163FE00D6463F /* Tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
+		1C65922F25D1B9B300E8F296 /* TheTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheTask.swift; sourceTree = "<group>"; };
+		1C85D63125C9E1B50017B240 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		1CC85CB325C953E9009B068A /* Canyou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Canyou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CC85CB625C953E9009B068A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CC85CB825C953E9009B068A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +103,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C61830D25D15CBE00D6463F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1C85D63125C9E1B50017B240 /* Home.swift */,
+				1C5ECF8525CD5DE500112B1C /* Registeration.swift */,
+				1CC85CBA25C953E9009B068A /* ContentView.swift */,
+				1C65922F25D1B9B300E8F296 /* TheTask.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1C61830E25D15CF300D6463F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1C0D9E0125CC09B500100D99 /* Task.swift */,
+				1C61831225D163FE00D6463F /* Tasks.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1CC85CAA25C953E9009B068A = {
 			isa = PBXGroup;
 			children = (
@@ -118,10 +148,11 @@
 		1CC85CB525C953E9009B068A /* Canyou */ = {
 			isa = PBXGroup;
 			children = (
+				1C61830E25D15CF300D6463F /* Model */,
+				1C61830D25D15CBE00D6463F /* View */,
 				1CC85CE925C95406009B068A /* GoogleService-Info.plist */,
 				1CC85CB625C953E9009B068A /* AppDelegate.swift */,
 				1CC85CB825C953E9009B068A /* SceneDelegate.swift */,
-				1CC85CBA25C953E9009B068A /* ContentView.swift */,
 				1CC85CBC25C953EB009B068A /* Assets.xcassets */,
 				1CC85CC125C953EB009B068A /* LaunchScreen.storyboard */,
 				1CC85CC425C953EB009B068A /* Info.plist */,
@@ -166,7 +197,6 @@
 				FF4A1102CC9B5D3C694E07F2 /* Pods-CanyouTests.debug.xcconfig */,
 				7CD45A04BA88BDC1DC67026B /* Pods-CanyouTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -419,8 +449,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C61831325D163FE00D6463F /* Tasks.swift in Sources */,
 				1CC85CB725C953E9009B068A /* AppDelegate.swift in Sources */,
 				1CC85CB925C953E9009B068A /* SceneDelegate.swift in Sources */,
+				1C0D9E0225CC09B500100D99 /* Task.swift in Sources */,
+				1C65923025D1B9B300E8F296 /* TheTask.swift in Sources */,
+				1C85D63225C9E1B50017B240 /* Home.swift in Sources */,
+				1C5ECF8625CD5DE500112B1C /* Registeration.swift in Sources */,
 				1CC85CBB25C953E9009B068A /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
