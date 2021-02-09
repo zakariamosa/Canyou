@@ -8,9 +8,10 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Task : Codable, Identifiable{
+struct Task : Codable, Identifiable, Equatable{
     @DocumentID var id : String?
     var taskname : String
     var taskdetails : String
     var done : Bool = false
+    var taskowneruid : String = ""
 }

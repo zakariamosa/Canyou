@@ -61,7 +61,8 @@ struct FirstPage : View {
         
         VStack(spacing: 20){
             
-            Image("pic")
+            //Image("pic")
+            Image(systemName: "phone.bubble.left").font(.system(size: 60))
             
             Text("Verify Your Number").font(.largeTitle).fontWeight(.heavy)
             
