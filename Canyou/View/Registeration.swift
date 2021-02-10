@@ -50,7 +50,7 @@ struct RegisterationView_Previews: PreviewProvider {
 
 struct FirstPage : View {
     
-    @State var ccode = ""
+    @State var ccode = "+46"
     @State var no = ""
     @State var show = false
     @State var msg = ""
@@ -73,7 +73,7 @@ struct FirstPage : View {
             
             HStack{
                 
-                TextField("+1", text: $ccode)
+                TextField("+46", text: $ccode)
                     .keyboardType(.numberPad)
                     .frame(width: 45)
                     .padding()
@@ -136,6 +136,7 @@ struct ScndPage : View {
     @Binding var ID : String
     @State var msg = ""
     @State var alert = false
+    @ObservedObject var users = Users()
     
     var body : some View{
         
@@ -145,7 +146,8 @@ struct ScndPage : View {
                 
                 VStack(spacing: 20){
                     
-                    Image("pic")
+                    //Image("pic")
+                    Image(systemName: "phone.bubble.left").font(.system(size: 60))
                     
                     Text("Verification Code").font(.largeTitle).fontWeight(.heavy)
                     
@@ -178,6 +180,9 @@ struct ScndPage : View {
                             UserDefaults.standard.set(true, forKey: "status")
                             
                             NotificationCenter.default.post(name: NSNotification.Name("statusChange"), object: nil)
+                            
+                            //here registeration finished
+                            print("\(users.entries[0].firstname)")
                         }
                         
                     }) {

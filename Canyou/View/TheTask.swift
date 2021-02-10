@@ -25,8 +25,21 @@ struct TheTaskView: View {
         
         VStack{
             
-                TextEditor(text: $taskname)
-                TextEditor(text: $taskdetails)
+                TextField("Task Name",text: $taskname)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 300, height: 50)
+                        .background(Color.green)
+                        .cornerRadius(15.0)
+                TextField("Task Details",text: $taskdetails)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 300, height: 500)
+                        .background(Color.green)
+                        .cornerRadius(15.0)
+                    .multilineTextAlignment(.center)
             
         
         } .navigationBarItems(trailing: Button(action: {
@@ -38,9 +51,6 @@ struct TheTaskView: View {
             if let tsk = task {
                 taskname = tsk.taskname
                 taskdetails = tsk.taskdetails
-            }else{
-                taskname = "today I ......"
-                taskdetails = "for ....."
             }
         }
     }
