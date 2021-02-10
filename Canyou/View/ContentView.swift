@@ -55,7 +55,8 @@ struct ContentView: View {
     @State private var lastname : String = ""
     //@State private var phone : String = "phone"
     //@State private var password : String = "password"
-    @ObservedObject var users = Users()
+    @ObservedObject var currentusers = Users()
+    @State private var isPresented : Bool = false
     
     
     
@@ -102,30 +103,43 @@ struct ContentView: View {
                             password=""
                         }*/
                         
-                        NavigationLink(destination: RegisterationView()) {
+                        NavigationLink(destination: RegisterationView().environmentObject(currentusers),isActive: $isPresented) {
                         ZStack{
                             Circle()
                                 .fill(Color.orange)
                                 .overlay(Circle().stroke(Color.white, lineWidth: 4))
                                 .frame(width: 100, height: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            
-                            Button(action: {
-                                //db.collection("Users").addDocument(data: ["name":"\(name)","phone":"\(phone)","password":"\(password)"])
-                                db.collection("Users").addDocument(data: ["firstname":"\(firstname)", "lastname":"\(lastname)"])
-                                let user = User(firstname: firstname, lastname: lastname)
-                                users.entries.append(user)
+                                
+                            Text("Register")
+                            /*Button(action: {
+                                
+                                
+                                
+                                
                             }, label: {
                                 ZStack{
                                     Image(systemName: "play")//.frame(width: 40, height: 40, alignment: .center)
                                 }
-                            })
+                            })*/
                             
                         }
+                        .onTapGesture
+                        {
                             
-                    }
+                            let user=User(firstname: firstname, lastname: lastname)
+                            currentusers.entries.append(user)
+                            print("ContentView Circle onTapGesture \(currentusers.entries.count)")
+                            self.isPresented = true
+                        }
+                        
+                            
+                        }
+                        
                         .navigationBarTitle("")
                         .navigationBarHidden(true)
                         .navigationBarBackButtonHidden(true)
+                        
+                        
                         
                 }
                     .frame(width: 500, height: 900, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)

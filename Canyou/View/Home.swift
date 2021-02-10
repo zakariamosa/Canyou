@@ -51,7 +51,7 @@ struct Home: View {
             
             
             
-            
+            .navigationBarTitle("Home")
             
             
             

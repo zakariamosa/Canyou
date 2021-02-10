@@ -12,6 +12,7 @@ import Firebase
 struct RegisterationView: View {
     
     @State var status = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
+    @EnvironmentObject var currentusers : Users
     
     var body: some View {
        
@@ -25,11 +26,13 @@ struct RegisterationView: View {
                 
                 NavigationView{
                     
-                     FirstPage()
+                    FirstPage().environmentObject(currentusers)
                 }
             }
             
         }.onAppear {
+            
+            print("RegisterationView \(currentusers.entries.count)")
             
             NotificationCenter.default.addObserver(forName: NSNotification.Name("statusChange"), object: nil, queue: .main) { (_) in
                 
@@ -56,6 +59,8 @@ struct FirstPage : View {
     @State var msg = ""
     @State var alert = false
     @State var ID = ""
+    @EnvironmentObject var currentusers : Users
+    
     
     var body : some View{
         
@@ -87,9 +92,11 @@ struct FirstPage : View {
                     .background(Color("Color"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 
-            } .padding(.top, 15)
+            } .padding(.top, 15).onAppear(){
+                print("FirstPage \(currentusers.entries.count)")
+            }
 
-            NavigationLink(destination: ScndPage(show: $show, ID: $ID), isActive: $show) {
+            NavigationLink(destination: ScndPage(show: $show, ID: $ID).environmentObject(currentusers), isActive: $show) {
                 
                 
                 Button(action: {
@@ -136,8 +143,8 @@ struct ScndPage : View {
     @Binding var ID : String
     @State var msg = ""
     @State var alert = false
-    @ObservedObject var users = Users()
-    
+    @EnvironmentObject var currentusers : Users
+    var db=Firestore.firestore()
     var body : some View{
         
         ZStack(alignment: .topLeading) {
@@ -182,7 +189,9 @@ struct ScndPage : View {
                             NotificationCenter.default.post(name: NSNotification.Name("statusChange"), object: nil)
                             
                             //here registeration finished
-                            print("\(users.entries[0].firstname)")
+                            print("ScndPage \(currentusers.entries.count) has an id: \(Auth.auth().currentUser?.uid)!")
+                            let currentuserid : String = (Auth.auth().currentUser?.uid)!
+                            db.collection("Users").addDocument(data: ["firstname":"\(currentusers.entries[0].firstname)", "lastname":"\(currentusers.entries[0].lastname)", "userid":"\(currentuserid)"])
                         }
                         
                     }) {

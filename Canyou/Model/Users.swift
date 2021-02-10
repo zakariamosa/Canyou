@@ -7,6 +7,10 @@
 
 import Foundation
 
-class Users : ObservableObject{
+
+
+class Users : ObservableObject {
     @Published var entries = [User]()
+    
+    
 }
