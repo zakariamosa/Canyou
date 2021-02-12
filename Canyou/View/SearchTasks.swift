@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 
-struct Home: View {
+struct SearchTasks: View {
     var db=Firestore.firestore()
     @State private var taskname : String = (Auth.auth().currentUser?.phoneNumber)!//"taskName"
     @State private var taskdetails : String = "taskDetails"
@@ -22,19 +22,17 @@ struct Home: View {
             
             List(){
                 ForEach(tasks.entries){task in
-                    NavigationLink(destination: TheTaskView(task: task, tasks: tasks)){
-                        RowView(task: task)
+                    NavigationLink(destination: TheTaskOthersView(task: task, tasks: tasks)){
+                        RowViewSearchTasks(task: task)
                      
                     }
                     
-                }.onDelete(perform: { indexSet in
+                }/*.onDelete(perform: { indexSet in
                     delete(rowindex: indexSet)
                     tasks.entries.remove(atOffsets: indexSet)
-                })
+                })*/
             }
-            .navigationBarItems(trailing: NavigationLink(destination: TheTaskView( tasks: tasks)){
-                Image(systemName: "plus.circle").font(.system(size: 30))
-            })
+            
   
             .onAppear(){
                 readTasks()
@@ -42,14 +40,14 @@ struct Home: View {
             
             
             
-            .navigationBarTitle("Home")
+            .navigationBarTitle("Can you do any?")
             
             .toolbar{
                 ToolbarItem(placement: .bottomBar){
                     HStack{
                         
                         
-                        /*Button(action: {
+                        Button(action: {
                             
                         }, label: {
                             NavigationLink(destination: Home()){
@@ -57,9 +55,9 @@ struct Home: View {
                                 
                             }
                         })
-                        Spacer()*/
+                        Spacer()
                         
-                        Button(action: {
+                        /*Button(action: {
                             
                             
                         }, label: {
@@ -68,7 +66,7 @@ struct Home: View {
                                 
                             }
                         })
-                        Spacer()
+                        Spacer()*/
                         
                         
                     }
@@ -100,7 +98,7 @@ struct Home: View {
     }
     func readTasks(){
         
-        db.collection("Tasks").whereField("taskowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
+        db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
             if let err=err{
                 print("Error getting document\(err)")
             }else{
@@ -161,13 +159,13 @@ struct Home: View {
     
 }
 
-struct Home_Previews: PreviewProvider {
+struct SearchTasks_Previews: PreviewProvider {
     static var previews: some View {
-        Home()
+        SearchTasks()
     }
 }
 
-struct RowView : View {
+struct RowViewSearchTasks : View {
     //var db=Firestore.firestore()
     var task : Task
     
