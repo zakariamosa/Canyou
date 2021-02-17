@@ -15,6 +15,7 @@ struct TheTaskView: View {
     @State private var taskdetails : String = ""
     var task : Task? = nil
     var tasks : Tasks
+    @State private var taskoffers=TasksOffers()
     
     
     
@@ -36,10 +37,27 @@ struct TheTaskView: View {
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .frame(width: 300, height: 500)
+                        .frame(width: 300, height: 200)
                         .background(Color.green)
                         .cornerRadius(15.0)
                     .multilineTextAlignment(.center)
+            
+            
+            List(){
+                ForEach(taskoffers.entries){taskoffer in
+                    //NavigationLink(destination: TheTaskOthersView(task: task, tasks: tasks)){
+                        RowViewSearchTaskOffers(taskoffer: taskoffer)
+                     
+                    //}
+                    
+                }
+            }
+            
+  
+            .onAppear(){
+                //readTasks()
+                
+            }
             
         
         } .navigationBarItems(trailing: Button(action: {
@@ -51,6 +69,7 @@ struct TheTaskView: View {
             if let tsk = task {
                 taskname = tsk.taskname
                 taskdetails = tsk.taskdetails
+                readTaskOffers(taskid: tsk.id!)
             }
         }
     }
@@ -87,6 +106,68 @@ struct TheTaskView: View {
         }
     }
     
+    
+    func readTaskOffers(taskid: String) {
+        taskoffers.entries.removeAll()
+        db.collection("TasksOffers").whereField("taskid", isEqualTo: taskid).addSnapshotListener{(snabshot,err) in
+            if let err=err{
+                print("Error getting document\(err)")
+            }else{
+                
+                
+                
+                
+                for document in snabshot!.documents{
+                    let result = Result {
+                        try document.data(as: TaskOffer.self)
+                    }
+                    switch result{
+                    case .success(let taskOffer):
+                        if let taskOffer = taskOffer{
+                            taskoffers.entries.append(taskOffer)
+                        }else{
+                            print("Document does not exists")
+                        }
+                    case .failure(let error):
+                        print("Error decoding Task \(error)")
+                    }
+                }
+                
+            }
+            
+        }
+        
+        
+        
+       
+    }
+    
+    
+    
+}
+
+
+
+struct RowViewSearchTaskOffers : View {
+    //var db=Firestore.firestore()
+    var taskoffer : TaskOffer
+    
+    
+    var body: some View {
+        HStack{
+            Text(taskoffer.taskofferdetails)
+            Spacer()
+            /*Image(systemName: task.done ? "checkmark.square" : "square")
+            Button(action: {
+             if let id=task.id{
+             db.collection("Tasks").document(id).updateData(["done" : !task.done])
+             //readTasks()
+             }
+             }, label: {
+             Image(systemName: task.done ? "checkmark.square" : "square")
+             })*/
+        }
+    }
     
     
 }

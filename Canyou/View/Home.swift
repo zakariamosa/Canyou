@@ -168,15 +168,17 @@ struct Home_Previews: PreviewProvider {
 }
 
 struct RowView : View {
-    //var db=Firestore.firestore()
+    var db=Firestore.firestore()
     var task : Task
+    @State private var thistaskhasoffers : Bool = false
     
     var body: some View {
         HStack{
             Text(task.taskname)
             Spacer()
-            Image(systemName: task.done ? "checkmark.square" : "square")
-            /*Button(action: {
+            Image(systemName: thistaskhasoffers ? "exclamationmark.bubble":"bubble.left" )
+            /*Image(systemName: task.done ? "checkmark.square" : "square")
+            Button(action: {
              if let id=task.id{
              db.collection("Tasks").document(id).updateData(["done" : !task.done])
              //readTasks()
@@ -184,7 +186,44 @@ struct RowView : View {
              }, label: {
              Image(systemName: task.done ? "checkmark.square" : "square")
              })*/
+        }.onAppear{
+            doesthistaskhasoffers(taskid: task.id!)
         }
+    }
+    
+    func doesthistaskhasoffers(taskid: String) {
+        
+        db.collection("TasksOffers").whereField("taskid", isEqualTo: taskid).addSnapshotListener{(snabshot,err) in
+            if let err=err{
+                print("Error getting document\(err)")
+            }else{
+                
+                
+                
+                
+                for document in snabshot!.documents{
+                    let result = Result {
+                        try document.data(as: TaskOffer.self)
+                    }
+                    switch result{
+                    case .success(let taskOffer):
+                        if let taskOffer = taskOffer{
+                            thistaskhasoffers = true
+                        }else{
+                            thistaskhasoffers = false
+                        }
+                    case .failure(let error):
+                        print("Error decoding Task \(error)")
+                    }
+                }
+                
+            }
+            
+        }
+        
+        
+        
+       
     }
 }
 

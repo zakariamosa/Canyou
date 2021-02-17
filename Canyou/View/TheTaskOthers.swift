@@ -16,6 +16,7 @@ struct TheTaskOthersView: View {
     @State private var taskOffer : String = ""
     var task : Task? = nil
     var tasks : Tasks
+    @State private var tasksOffers = TasksOffers()
     
     var yesICanDoItString = "Yes I can, and my Offer ...."/*"""
 Yes I can do it!
@@ -45,6 +46,7 @@ and this is my Offer ....
                         .cornerRadius(15.0)
                     .multilineTextAlignment(.center)
             TextField(yesICanDoItString,text: $taskOffer)
+            
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding()
@@ -64,7 +66,61 @@ and this is my Offer ....
             if let tsk = task {
                 taskname = tsk.taskname
                 taskdetails = tsk.taskdetails
+                if let tskid = tsk.id{
+                    readTaskOffer(taskid: tskid)
+                    print("entries count: \(tasksOffers.entries.count) till taskid: \(tskid)")
+                    /*if (tasksOffers.entries.count>0){
+                        taskOffer = tasksOffers.entries[0].taskofferdetails
+                    }*/
+                }
             }
+        }
+    }
+    
+   
+    
+    func addTaskOffer(){
+        let taskOffer = TaskOffer(taskid: (task?.id)!, taskofferdetails: self.taskOffer, taskofferowneruid: (Auth.auth().currentUser?.uid)!)
+        //Task(taskname: taskname, taskdetails: taskdetails, taskowneruid: (Auth.auth().currentUser?.uid)!)
+        do{
+            _ = try db.collection("TasksOffers").addDocument(from: taskOffer)
+            
+        }catch{
+            print("Print error saving to DB")
+        }
+    }
+    
+    
+    func readTaskOffer(taskid: String){
+        
+        db.collection("TasksOffers").whereField("taskofferowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).whereField("taskid", isEqualTo: taskid).addSnapshotListener{(snabshot,err) in
+            if let err=err{
+                print("Error getting document\(err)")
+            }else{
+                
+                
+                
+                tasksOffers.entries.removeAll()
+                for document in snabshot!.documents{
+                    let result = Result {
+                        try document.data(as: TaskOffer.self)
+                    }
+                    switch result{
+                    case .success(let taskOffer):
+                        if let taskOffer = taskOffer{
+                            tasksOffers.entries.append(taskOffer)
+                            self.taskOffer = tasksOffers.entries[0].taskofferdetails
+                            print("tasksOffers count: \(tasksOffers.entries.count)")
+                        }else{
+                            print("Document does not exists")
+                        }
+                    case .failure(let error):
+                        print("Error decoding Task \(error)")
+                    }
+                }
+                
+            }
+            
         }
     }
     
@@ -77,31 +133,22 @@ and this is my Offer ....
                 //tasks.entries[currentTaskIndex].taskname = self.taskname
                 //tasks.entries[currentTaskIndex].taskdetails = self.taskdetails
                 if let id=tasks.entries[currentTaskIndex].id{
-                    db.collection("Tasks").document(id).updateData(["taskname" : self.taskname, "taskdetails" : self.taskdetails])
+                    //db.collection("Tasks").document(id).updateData(["taskname" : self.taskname, "taskdetails" : self.taskdetails])
+                    readTaskOffer(taskid: id)
+                    if (tasksOffers.entries.count==1){
+                        //print("tasksOffers.entries[0].id: \(tasksOffers.entries[0].id)")
+                        db.collection("TasksOffers").document(self.tasksOffers.entries[0].id!).updateData(["taskofferdetails" : self.taskOffer])
+                    }else{
+                        addTaskOffer()
+                    }
                 }
             }
             
-        }else{
-            /*print("saving new task )")
-            let newTask = Task(taskname: self.taskname, taskdetails: self.taskdetails, done: false)
-            tasks.entries.append(newTask)
-            print("saving new task \(self.taskname)")*/
-            addTask()
-        }
-    }
-    
-    func addTask(){
-        let task = Task(taskname: taskname, taskdetails: taskdetails, taskowneruid: (Auth.auth().currentUser?.uid)!)
-        do{
-            _ = try db.collection("Tasks").addDocument(from: task)
-            
-        }catch{
-            print("Print error saving to DB")
-        }
+        
     }
     
     
     
 }
 
-
+}

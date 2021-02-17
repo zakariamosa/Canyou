@@ -173,8 +173,8 @@ struct RowViewSearchTasks : View {
         HStack{
             Text(task.taskname)
             Spacer()
-            Image(systemName: task.done ? "checkmark.square" : "square")
-            /*Button(action: {
+            /*Image(systemName: task.done ? "checkmark.square" : "square")
+            Button(action: {
              if let id=task.id{
              db.collection("Tasks").document(id).updateData(["done" : !task.done])
              //readTasks()
