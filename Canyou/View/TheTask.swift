@@ -26,63 +26,53 @@ struct TheTaskView: View {
         
         VStack{
             
-                TextField("Task Name",text: $taskname)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 300, height: 50)
-                        .background(Color.green)
-                        .cornerRadius(15.0)
-                TextField("Task Details",text: $taskdetails)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 300, height: 200)
-                        .background(Color.green)
-                        .cornerRadius(15.0)
-                    .multilineTextAlignment(.center)
+            TextField("Task Name",text: $taskname)
+                .font(.headline)
+                .foregroundColor(.white)
+                .padding()
+                .frame(width: 300, height: 50)
+                .background(Color.green)
+                .cornerRadius(15.0)
+            TextField("Task Details",text: $taskdetails)
+                .font(.headline)
+                .foregroundColor(.white)
+                .padding()
+                .frame(width: 300, height: 200)
+                .background(Color.green)
+                .cornerRadius(15.0)
+                .multilineTextAlignment(.center)
             
             NavigationView{
-                Button("Present Full-Screen Cover") {
-                            isPresenting.toggle()
+                
+                
+                List(){
+                    ForEach(taskoffers.entries){taskoffer in
+                        NavigationLink(destination: TaskOffersOwnerView(taskoffer: taskoffer)){
+                            RowViewSearchTaskOffers(taskoffer: taskoffer)
+                                .onTapGesture {
+                                    isPresenting.toggle()
+                                }
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity,
+                                       maxHeight: .infinity)
+                                .background(Color.blue)
+                                .ignoresSafeArea(edges: .all)
+                        }.fullScreenCover(isPresented: $isPresenting,
+                                          onDismiss: didDismiss){
+                            TaskOffersOwnerView(taskoffer: taskoffer)
                         }
-                .fullScreenCover(isPresented: $isPresenting,
-                                         onDismiss: didDismiss) {
-            List(){
-                ForEach(taskoffers.entries){taskoffer in
-                    NavigationLink(destination: TaskOffersOwnerView(taskoffer: taskoffer)){
-                        RowViewSearchTaskOffers(taskoffer: taskoffer)
-                            
-                            
-                            
-                            
-                            
-                            .onTapGesture {
-                                            isPresenting.toggle()
-                                        }
-                            .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity,
-                                               maxHeight: .infinity)
-                                        .background(Color.blue)
-                                        .ignoresSafeArea(edges: .all)
-                        
-                        
-                        
-                        
                         
                     }
-                    
                 }
+                .navigationBarTitle("Task offers !!!")
+                
+                
             }
-            .navigationBarTitle("Task offers !!!")
-                                         }
             
-            }
             
-  
             .navigationBarTitle("Task Details")
             
-        
+            
         } .navigationBarItems(trailing: Button(action: {
             saveTask()
         }, label: {
@@ -99,12 +89,10 @@ struct TheTaskView: View {
         }
     }
     
-    
+  
     func didDismiss() {
-            // Handle the dismissing action.
-        }
-    
-    
+        // Handle the dismissing action.
+    }
     
     func saveTask(){
         
@@ -121,9 +109,9 @@ struct TheTaskView: View {
             
         }else{
             /*print("saving new task )")
-            let newTask = Task(taskname: self.taskname, taskdetails: self.taskdetails, done: false)
-            tasks.entries.append(newTask)
-            print("saving new task \(self.taskname)")*/
+             let newTask = Task(taskname: self.taskname, taskdetails: self.taskdetails, done: false)
+             tasks.entries.append(newTask)
+             print("saving new task \(self.taskname)")*/
             addTask()
         }
     }
@@ -172,7 +160,7 @@ struct TheTaskView: View {
         
         
         
-       
+        
     }
     
     
@@ -187,20 +175,25 @@ struct RowViewSearchTaskOffers : View {
     
     
     var body: some View {
-        HStack{
-            Text(taskoffer.taskofferdetails)
-            Spacer()
-            /*Image(systemName: task.done ? "checkmark.square" : "square")
-            Button(action: {
-             if let id=task.id{
-             db.collection("Tasks").document(id).updateData(["done" : !task.done])
-             //readTasks()
-             }
-             }, label: {
-             Image(systemName: task.done ? "checkmark.square" : "square")
-             })*/
-        }
+        
+                            HStack{
+                                Text(taskoffer.taskofferdetails)
+                                
+                                    
+                                
+                                
+                                Spacer()
+                                
+                                
+                                
+                            }
+                         
     }
+    
+    
+    
+   
+    
     
     
 }

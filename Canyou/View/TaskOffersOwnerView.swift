@@ -62,6 +62,8 @@ struct TaskOffersOwnerView: View {
             }*/
         }
     }
+        
+       
     
     func saveTaskOffer(){
         
@@ -73,6 +75,9 @@ struct TaskOffersOwnerView: View {
             
         }
     }
+        
+        
+       
     
     
   /*
