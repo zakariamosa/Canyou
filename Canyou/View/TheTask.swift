@@ -15,8 +15,8 @@ struct TheTaskView: View {
     @State private var taskdetails : String = ""
     var task : Task? = nil
     var tasks : Tasks
-    @State private var taskoffers=TasksOffers()
-    
+    @ObservedObject var taskoffers=TasksOffers()
+    @State private var isPresenting = false
     
     
     var body: some View {
@@ -42,22 +42,45 @@ struct TheTaskView: View {
                         .cornerRadius(15.0)
                     .multilineTextAlignment(.center)
             
-            
+            NavigationView{
+                Button("Present Full-Screen Cover") {
+                            isPresenting.toggle()
+                        }
+                .fullScreenCover(isPresented: $isPresenting,
+                                         onDismiss: didDismiss) {
             List(){
                 ForEach(taskoffers.entries){taskoffer in
-                    //NavigationLink(destination: TheTaskOthersView(task: task, tasks: tasks)){
+                    NavigationLink(destination: TaskOffersOwnerView(taskoffer: taskoffer)){
                         RowViewSearchTaskOffers(taskoffer: taskoffer)
-                     
-                    //}
+                            
+                            
+                            
+                            
+                            
+                            .onTapGesture {
+                                            isPresenting.toggle()
+                                        }
+                            .foregroundColor(.white)
+                                        .frame(maxWidth: .infinity,
+                                               maxHeight: .infinity)
+                                        .background(Color.blue)
+                                        .ignoresSafeArea(edges: .all)
+                        
+                        
+                        
+                        
+                        
+                    }
                     
                 }
             }
+            .navigationBarTitle("Task offers !!!")
+                                         }
+            
+            }
             
   
-            .onAppear(){
-                //readTasks()
-                
-            }
+            .navigationBarTitle("Task Details")
             
         
         } .navigationBarItems(trailing: Button(action: {
@@ -70,9 +93,18 @@ struct TheTaskView: View {
                 taskname = tsk.taskname
                 taskdetails = tsk.taskdetails
                 readTaskOffers(taskid: tsk.id!)
+                print("taskoffers entries count on appear\(taskoffers.entries.count)")
+                print("task id on appear\(tsk.id)")
             }
         }
     }
+    
+    
+    func didDismiss() {
+            // Handle the dismissing action.
+        }
+    
+    
     
     func saveTask(){
         
@@ -108,14 +140,14 @@ struct TheTaskView: View {
     
     
     func readTaskOffers(taskid: String) {
-        taskoffers.entries.removeAll()
+        
         db.collection("TasksOffers").whereField("taskid", isEqualTo: taskid).addSnapshotListener{(snabshot,err) in
             if let err=err{
                 print("Error getting document\(err)")
             }else{
                 
                 
-                
+                taskoffers.entries.removeAll()
                 
                 for document in snabshot!.documents{
                     let result = Result {
@@ -125,6 +157,7 @@ struct TheTaskView: View {
                     case .success(let taskOffer):
                         if let taskOffer = taskOffer{
                             taskoffers.entries.append(taskOffer)
+                            print("taskoffers entries count\(taskoffers.entries.count)")
                         }else{
                             print("Document does not exists")
                         }
