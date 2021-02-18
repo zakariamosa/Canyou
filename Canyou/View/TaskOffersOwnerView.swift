@@ -21,7 +21,9 @@ struct TaskOffersOwnerView: View {
     
     var taskoffer : TaskOffer
     
-    
+    @State var isOfferAccepted = false // toggle state
+    @State private var offerUserFirstName : String = ""
+    @State private var offerUserLastName : String = ""
     
     
     var body: some View {
@@ -31,6 +33,20 @@ struct TaskOffersOwnerView: View {
         
         VStack{
             
+            Text(offerUserFirstName)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 300, height: 50)
+                        .background(Color.green)
+                        .cornerRadius(15.0)
+            Text(offerUserLastName)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 300, height: 50)
+                        .background(Color.green)
+                        .cornerRadius(15.0)
             Text(taskoffer.taskofferdetails)
                         .font(.headline)
                         .foregroundColor(.white)
@@ -38,6 +54,23 @@ struct TaskOffersOwnerView: View {
                         .frame(width: 300, height: 50)
                         .background(Color.green)
                         .cornerRadius(15.0)
+                
+            VStack{
+                        Spacer()
+                        Toggle(isOn: $isOfferAccepted){
+                            Text("Offer accepted")
+                                .font(.largeTitle)
+                                .foregroundColor(.red)
+                        }
+                        .padding()
+                        Image(systemName: isOfferAccepted ? "hand.thumbsup":"hand.thumbsdown")
+                            .font(.system(size: 80))
+                            .foregroundColor(isOfferAccepted ? .blue : .red)
+                        .padding()
+                        
+                        Spacer()
+                    }.padding()
+                
                 
             
            
@@ -53,6 +86,8 @@ struct TaskOffersOwnerView: View {
             Text("Save")
         }))
         .onAppear(){
+            isOfferAccepted=taskoffer.taskofferaccepted
+            readOfferDetails()
             /*if let tsk = task {
                 taskname = tsk.taskname
                 taskdetails = tsk.taskdetails
@@ -70,7 +105,7 @@ struct TaskOffersOwnerView: View {
         if let taskofferid = taskoffer.id {
             print("saving old task \(taskoffer)")
             // update existing taskoffer
-            db.collection("TasksOffers").document(taskofferid).updateData(["taskofferaccepted" : true])
+            db.collection("TasksOffers").document(taskofferid).updateData(["taskofferaccepted" : isOfferAccepted])
         }else{
             
         }
@@ -80,27 +115,27 @@ struct TaskOffersOwnerView: View {
        
     
     
-  /*
+  
     
-    func readTaskOffers(taskid: String) {
+    func readOfferDetails() {
         
-        db.collection("TasksOffers").whereField("taskid", isEqualTo: taskid).addSnapshotListener{(snabshot,err) in
+        db.collection("Users").whereField("userid", isEqualTo: taskoffer.taskofferowneruid).addSnapshotListener{(snabshot,err) in
             if let err=err{
                 print("Error getting document\(err)")
             }else{
                 
                 
-                taskoffers.entries.removeAll()
+                
                 
                 for document in snabshot!.documents{
                     let result = Result {
-                        try document.data(as: TaskOffer.self)
+                        try document.data(as: User.self)
                     }
                     switch result{
-                    case .success(let taskOffer):
-                        if let taskOffer = taskOffer{
-                            taskoffers.entries.append(taskOffer)
-                            print("taskoffers entries count\(taskoffers.entries.count)")
+                    case .success(let user):
+                        if let usr = user{
+                            offerUserFirstName=usr.firstname
+                            offerUserLastName=usr.lastname
                         }else{
                             print("Document does not exists")
                         }
@@ -116,7 +151,7 @@ struct TaskOffersOwnerView: View {
         
         
        
-    }*/
+    }
     
     
     

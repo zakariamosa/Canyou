@@ -171,12 +171,26 @@ struct RowView : View {
     var db=Firestore.firestore()
     var task : Task
     @State private var thistaskhasoffers : Bool = false
+    @State  var taskstatus = TaskStatus.taskinitializedbuthasnotoffers
     
     var body: some View {
         HStack{
             Text(task.taskname)
             Spacer()
-            Image(systemName: thistaskhasoffers ? "exclamationmark.bubble":"bubble.left" )
+            
+            
+            
+            //Image(systemName: thistaskhasoffers ? "exclamationmark.bubble":"bubble.left" ).font(.system(size: 30))
+            switch taskstatus{
+            case TaskStatus.taskhasoffersbutnoofferaccepted:
+                Image(systemName: "exclamationmark.bubble" ).font(.system(size: 30))
+            case TaskStatus.taskinprogress:
+                Image(systemName: "eyes" ).font(.system(size: 30))
+            default:
+                Image(systemName: "bubble.left" ).font(.system(size: 30))
+            }
+            
+            
             /*Image(systemName: task.done ? "checkmark.square" : "square")
             Button(action: {
              if let id=task.id{
@@ -188,6 +202,8 @@ struct RowView : View {
              })*/
         }.onAppear{
             doesthistaskhasoffers(taskid: task.id!)
+            doesthistaskhasacceptedoffers(taskid: task.id!)
+            print("\(taskstatus)")
         }
     }
     
@@ -209,8 +225,12 @@ struct RowView : View {
                     case .success(let taskOffer):
                         if let taskOffer = taskOffer{
                             thistaskhasoffers = true
+                            taskstatus = TaskStatus.taskhasoffersbutnoofferaccepted
+                            print("if \(taskstatus)")
                         }else{
                             thistaskhasoffers = false
+                            taskstatus = TaskStatus.taskinitializedbuthasnotoffers
+                            print("else \(taskstatus)")
                         }
                     case .failure(let error):
                         print("Error decoding Task \(error)")
@@ -220,10 +240,48 @@ struct RowView : View {
             }
             
         }
-        
-        
-        
+         
        
     }
+    
+    
+    func doesthistaskhasacceptedoffers(taskid: String) {
+        
+        db.collection("TasksOffers").whereField("taskid", isEqualTo: taskid).whereField("taskofferaccepted", isEqualTo: true).addSnapshotListener{(snabshot,err) in
+            if let err=err{
+                print("Error getting document\(err)")
+            }else{
+                
+                
+                
+                
+                for document in snabshot!.documents{
+                    let result = Result {
+                        try document.data(as: TaskOffer.self)
+                    }
+                    switch result{
+                    case .success(let taskOffer):
+                        if let taskOffer = taskOffer{
+                            thistaskhasoffers = true
+                            taskstatus = TaskStatus.taskinprogress
+                            print("if \(taskstatus)")
+                        }else{
+                            thistaskhasoffers = false
+                            taskstatus = TaskStatus.taskinitializedbuthasnotoffers
+                            print("else \(taskstatus)")
+                        }
+                    case .failure(let error):
+                        print("Error decoding Task \(error)")
+                    }
+                }
+                
+            }
+            
+        }
+         
+       
+    }
+    
+    
 }
 

@@ -42,32 +42,40 @@ struct TheTaskView: View {
                 .cornerRadius(15.0)
                 .multilineTextAlignment(.center)
             
-            NavigationView{
+            //NavigationView{
                 
-                
+            Text("Task offers !!!")
+                .font(.headline)
+                .foregroundColor(.white)
+                .padding()
+                .frame(width: 300, height: 50)
+                .background(Color.orange)
+                .cornerRadius(15.0)
+                .multilineTextAlignment(.center)
                 List(){
                     ForEach(taskoffers.entries){taskoffer in
                         NavigationLink(destination: TaskOffersOwnerView(taskoffer: taskoffer)){
                             RowViewSearchTaskOffers(taskoffer: taskoffer)
-                                .onTapGesture {
+                            /*.onTapGesture {
                                     isPresenting.toggle()
                                 }
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity,
                                        maxHeight: .infinity)
                                 .background(Color.blue)
-                                .ignoresSafeArea(edges: .all)
-                        }.fullScreenCover(isPresented: $isPresenting,
+                                .ignoresSafeArea(edges: .all)*/
+                        }
+                        /*.fullScreenCover(isPresented: $isPresenting,
                                           onDismiss: didDismiss){
                             TaskOffersOwnerView(taskoffer: taskoffer)
-                        }
+                        }*/
                         
                     }
                 }
-                .navigationBarTitle("Task offers !!!")
+                //.navigationBarTitle("Task offers !!!")
                 
                 
-            }
+            //}
             
             
             .navigationBarTitle("Task Details")
