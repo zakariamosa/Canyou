@@ -191,7 +191,8 @@ struct ScndPage : View {
                             //here registeration finished
                             print("ScndPage \(currentusers.entries.count) has an id: \(Auth.auth().currentUser?.uid)!")
                             let currentuserid : String = (Auth.auth().currentUser?.uid)!
-                            db.collection("Users").addDocument(data: ["firstname":"\(currentusers.entries[0].firstname)", "lastname":"\(currentusers.entries[0].lastname)", "userid":"\(currentuserid)"])
+                            let currentuserphonenumber : String = (Auth.auth().currentUser?.phoneNumber)!
+                            db.collection("Users").addDocument(data: ["firstname":"\(currentusers.entries[0].firstname)", "lastname":"\(currentusers.entries[0].lastname)", "userid":"\(currentuserid)", "phonenumber":"\(currentuserphonenumber)"])
                         }
                         
                     }) {

@@ -5,12 +5,7 @@
 //  Created by Zakaria Mosa on 2021-02-17.
 //
 
-//
-//  TheTask.swift
-//  Canyou
-//
-//  Created by Zakaria Mosa on 2021-02-08.
-//
+
 
 import SwiftUI
 import Firebase
@@ -24,6 +19,7 @@ struct TaskOffersOwnerView: View {
     @State var isOfferAccepted = false // toggle state
     @State private var offerUserFirstName : String = ""
     @State private var offerUserLastName : String = ""
+    @State private var offerUserPhoneNumber : String = ""
     
     
     var body: some View {
@@ -41,6 +37,13 @@ struct TaskOffersOwnerView: View {
                         .background(Color.green)
                         .cornerRadius(15.0)
             Text(offerUserLastName)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 300, height: 50)
+                        .background(Color.green)
+                        .cornerRadius(15.0)
+            Text(offerUserPhoneNumber)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
@@ -136,6 +139,7 @@ struct TaskOffersOwnerView: View {
                         if let usr = user{
                             offerUserFirstName=usr.firstname
                             offerUserLastName=usr.lastname
+                            offerUserPhoneNumber = usr.phonenumber
                         }else{
                             print("Document does not exists")
                         }

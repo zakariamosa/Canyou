@@ -13,4 +13,5 @@ struct User : Codable, Identifiable, Equatable{
     var firstname : String
     var lastname : String
     var userid : String = ""
+    var phonenumber : String = ""
 }

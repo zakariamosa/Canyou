@@ -36,7 +36,7 @@ struct Home: View {
                 
                 
                 ForEach(tasksIWillMake.entries){task in
-                    NavigationLink(destination: TheTaskView(task: task, tasks: tasks)){
+                    NavigationLink(destination: ForeginTaskInfoView(task: task)){
                         RowView(task: task)
                      
                     }
