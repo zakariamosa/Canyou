@@ -21,6 +21,7 @@ struct ForeginTaskInfoView: View {
     @State private var TaskOwnerCellPhone : String = ""
     @State private var myOffer : String = ""
     @State private var taskDetails : String = ""
+    @Environment(\.presentationMode) var presentationMode
     
     
     var body: some View {
@@ -80,7 +81,8 @@ struct ForeginTaskInfoView: View {
         } 
         .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: MyBackButton(label: "Back!") {
-                    showingAnotherPersonsTask = false
+                    //showingAnotherPersonsTask = false
+                    presentationMode.wrappedValue.dismiss()
                 })
         .onAppear(){
             readOfferDetails()

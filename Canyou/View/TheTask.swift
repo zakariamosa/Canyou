@@ -73,12 +73,13 @@ struct TheTaskView: View {
             
         }
         
-        /*.navigationBarItems(trailing: Button(action: {
+        .navigationBarItems(trailing: Button(action: {
             saveTask()
+         presentationMode.wrappedValue.dismiss()
         }, label: {
             Text("Save")
-        }))*/
-        .navigationBarBackButtonHidden(true)
+        }))
+        /*.navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: MyBackButton(label: "Back!") {
                     showingMyOwnTask = false
                 }, trailing: Button(action: {
@@ -87,7 +88,7 @@ struct TheTaskView: View {
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Save")
-                }))
+                }))*/
         .onAppear(){
             if let tsk = task {
                 taskname = tsk.taskname

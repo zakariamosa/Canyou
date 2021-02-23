@@ -17,16 +17,20 @@ struct Home: View {
     @State private var showingMyOwnTask = false
     @State private var showingAnotherPersonsTask = false
 
-    
+    @State private var selectedItem: String? = ""
+    @State private var selectedAnotherItem: String? = ""
     
     var body: some View {
         NavigationView{
             
             List(){
                 ForEach(tasks.entries){task in
-                    NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask, task: task, tasks: tasks), isActive: self.$showingMyOwnTask){
+                    NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask, task: task, tasks: tasks), tag: task.id!, selection: $selectedItem){
+                        RowView(task: task).onTapGesture {
+                            self.selectedItem = task.id
+                            showingMyOwnTask = true
+                        }
                         
-                            RowView(task: task)
                        
                         
                      
@@ -40,9 +44,12 @@ struct Home: View {
                 
                 
                 ForEach(tasksIWillMake.entries){task in
-                    NavigationLink(destination: ForeginTaskInfoView(showingAnotherPersonsTask: $showingAnotherPersonsTask, task: task), isActive: self.$showingAnotherPersonsTask){
-                        RowView(task: task)
-                     
+                    NavigationLink(destination: ForeginTaskInfoView(showingAnotherPersonsTask: $showingAnotherPersonsTask, task: task), tag: task.id!, selection: $selectedAnotherItem){
+                        RowView(task: task).onTapGesture {
+                            self.selectedAnotherItem = task.id
+                            showingAnotherPersonsTask = true
+                        }
+                        
                     }
                     
                 }

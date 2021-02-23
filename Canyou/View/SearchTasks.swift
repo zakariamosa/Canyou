@@ -102,9 +102,7 @@ struct SearchTasks: View {
             if let err=err{
                 print("Error getting document\(err)")
             }else{
-                
-                
-                
+
                 tasks.entries.removeAll()
                 for document in snabshot!.documents{
                     let result = Result {
@@ -113,8 +111,36 @@ struct SearchTasks: View {
                     switch result{
                     case .success(let task):
                         if let task = task{
-                            tasks.entries.append(task)
-                            //print("\(task)")
+                            //tasks.entries.append(task)
+                            
+                            
+                            
+                            
+                            
+                            db.collection("TasksOffers").whereField("taskid", isEqualTo: task.id).whereField("taskofferowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).whereField("taskofferaccepted", isEqualTo: true).addSnapshotListener{(snabshot,err) in
+                                if let err=err{
+                                    print("Error getting document\(err)")
+                                }else{
+
+                                    if snabshot!.isEmpty{
+                                        tasks.entries.append(task)
+                                        return
+                                    }
+                                    
+                                    
+                                }
+                                
+                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                         }else{
                             print("Document does not exists")
                         }
@@ -126,35 +152,7 @@ struct SearchTasks: View {
             }
             
         }
-        
-        
-        
-        
-        
-        
-        /*db.collection("Tasks").getDocuments(){(snabshot,err) in
-            if let err=err{
-                print("Error getting document\(err)")
-            }else{
-                tasks.entries.removeAll()
-                for document in snabshot!.documents{
-                    let result = Result {
-                        try document.data(as: Task.self)
-                    }
-                    switch result{
-                    case .success(let task):
-                        if let task = task{
-                            tasks.entries.append(task)
-                            //print("\(task)")
-                        }else{
-                            print("Document does not exists")
-                        }
-                    case .failure(let error):
-                        print("Error decoding Task \(error)")
-                    }
-                }
-            }
-        }*/
+ 
     }
     
 }
