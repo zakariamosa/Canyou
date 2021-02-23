@@ -11,12 +11,15 @@ import Firebase
 struct TheTaskView: View {
     var db=Firestore.firestore()
     
+    @Binding var showingMyOwnTask: Bool
+    
     @State private var taskname : String = ""
     @State private var taskdetails : String = ""
     var task : Task? = nil
     var tasks : Tasks
     @ObservedObject var taskoffers=TasksOffers()
     @State private var isPresenting = false
+    @Environment(\.presentationMode) var presentationMode
     
     
     var body: some View {
@@ -56,36 +59,35 @@ struct TheTaskView: View {
                     ForEach(taskoffers.entries){taskoffer in
                         NavigationLink(destination: TaskOffersOwnerView(taskoffer: taskoffer)){
                             RowViewSearchTaskOffers(taskoffer: taskoffer)
-                            /*.onTapGesture {
-                                    isPresenting.toggle()
-                                }
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity,
-                                       maxHeight: .infinity)
-                                .background(Color.blue)
-                                .ignoresSafeArea(edges: .all)*/
+                           
                         }
-                        /*.fullScreenCover(isPresented: $isPresenting,
-                                          onDismiss: didDismiss){
-                            TaskOffersOwnerView(taskoffer: taskoffer)
-                        }*/
+                       
                         
                     }
                 }
-                //.navigationBarTitle("Task offers !!!")
+              
                 
-                
-            //}
-            
             
             .navigationBarTitle("Task Details")
             
             
-        } .navigationBarItems(trailing: Button(action: {
+        }
+        
+        /*.navigationBarItems(trailing: Button(action: {
             saveTask()
         }, label: {
             Text("Save")
-        }))
+        }))*/
+        .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: MyBackButton(label: "Back!") {
+                    showingMyOwnTask = false
+                }, trailing: Button(action: {
+                    showingMyOwnTask = false
+                    saveTask()
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Save")
+                }))
         .onAppear(){
             if let tsk = task {
                 taskname = tsk.taskname
@@ -186,24 +188,12 @@ struct RowViewSearchTaskOffers : View {
         
                             HStack{
                                 Text(taskoffer.taskofferdetails)
-                                
-                                    
-                                
-                                
                                 Spacer()
-                                
-                                
-                                
                             }
                          
     }
     
     
     
-   
-    
-    
-    
 }
-
 

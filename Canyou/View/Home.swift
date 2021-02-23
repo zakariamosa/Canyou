@@ -4,7 +4,6 @@
 //
 //  Created by Zakaria Mosa on 2021-02-02.
 //
-
 import SwiftUI
 import Firebase
 
@@ -15,6 +14,8 @@ struct Home: View {
     @State private var taskdetails : String = "taskDetails"
     @ObservedObject var tasks = Tasks()
     @ObservedObject var tasksIWillMake = Tasks()
+    @State private var showingMyOwnTask = false
+    @State private var showingAnotherPersonsTask = false
 
     
     
@@ -23,8 +24,11 @@ struct Home: View {
             
             List(){
                 ForEach(tasks.entries){task in
-                    NavigationLink(destination: TheTaskView(task: task, tasks: tasks)){
-                        RowView(task: task)
+                    NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask, task: task, tasks: tasks), isActive: self.$showingMyOwnTask){
+                        
+                            RowView(task: task)
+                       
+                        
                      
                     }
                     
@@ -36,7 +40,7 @@ struct Home: View {
                 
                 
                 ForEach(tasksIWillMake.entries){task in
-                    NavigationLink(destination: ForeginTaskInfoView(task: task)){
+                    NavigationLink(destination: ForeginTaskInfoView(showingAnotherPersonsTask: $showingAnotherPersonsTask, task: task), isActive: self.$showingAnotherPersonsTask){
                         RowView(task: task)
                      
                     }
@@ -46,7 +50,7 @@ struct Home: View {
                 
                 
             }
-            .navigationBarItems(trailing: NavigationLink(destination: TheTaskView( tasks: tasks)){
+            .navigationBarItems(trailing: NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask,tasks: tasks)){
                 Image(systemName: "plus.circle").font(.system(size: 30))
             })
   
@@ -115,127 +119,129 @@ struct Home: View {
         
     }
     func readTasks(){
-        
-        db.collection("Tasks").whereField("taskowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
-            if let err=err{
-                print("Error getting document\(err)")
-            }else{
-                
-                
-                
-                tasks.entries.removeAll()
-                for document in snabshot!.documents{
-                    let result = Result {
-                        try document.data(as: Task.self)
-                    }
-                    switch result{
-                    case .success(let task):
-                        if let task = task{
-                            tasks.entries.append(task)
-                            //print("\(task)")
-                        }else{
-                            print("Document does not exists")
+            
+            db.collection("Tasks").whereField("taskowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
+                if let err=err{
+                    print("Error getting document\(err)")
+                }else{
+                    
+                    
+                    
+                    tasks.entries.removeAll()
+                    for document in snabshot!.documents{
+                        let result = Result {
+                            try document.data(as: Task.self)
                         }
-                    case .failure(let error):
-                        print("Error decoding Task \(error)")
+                        switch result{
+                        case .success(let task):
+                            if let task = task{
+                                tasks.entries.append(task)
+                                //print("\(task)")
+                            }else{
+                                print("Document does not exists")
+                            }
+                        case .failure(let error):
+                            print("Error decoding Task \(error)")
+                        }
                     }
+                    
                 }
                 
             }
             
+            
         }
-        
-        
-    }
     
     func readTasksIWillMake(){
-        
-        db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
-            if let err=err{
-                print("Error getting document\(err)")
-            }else{
-                
-                
-                
-                tasksIWillMake.entries.removeAll()
-                for document in snabshot!.documents{
-                    let result = Result {
-                        try document.data(as: Task.self)
-                    }
-                    switch result{
-                    case .success(let task):
-                        if let tsk = task{
-                            //check if I gave an accepted offer to this task
-                            
-                            
-                            db.collection("TasksOffers").whereField("taskid", isEqualTo: tsk.id).whereField("taskofferaccepted", isEqualTo: true).whereField("taskofferowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
-                                if let err=err{
-                                    print("Error getting document\(err)")
-                                }else{
-                                    
-                                    
-                                    
-                                    
-                                    for document in snabshot!.documents{
-                                        let result = Result {
-                                            try document.data(as: TaskOffer.self)
-                                        }
-                                        switch result{
-                                        case .success(let taskoffer):
-                                            if let tskoffer = taskoffer{
-                                                //check if I gave an accepted offer to this task
-                                                
-                                                
-                                                tasksIWillMake.entries.append(tsk)
-                                                //print("\(task)")
-                                            }else{
-                                                print("Document does not exists")
+            
+            db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
+                if let err=err{
+                    print("Error getting document\(err)")
+                }else{
+                    
+                    
+                    
+                    tasksIWillMake.entries.removeAll()
+                    for document in snabshot!.documents{
+                        let result = Result {
+                            try document.data(as: Task.self)
+                        }
+                        switch result{
+                        case .success(let task):
+                            if let tsk = task{
+                                //check if I gave an accepted offer to this task
+                                
+                                
+                                db.collection("TasksOffers").whereField("taskid", isEqualTo: tsk.id).whereField("taskofferaccepted", isEqualTo: true).whereField("taskofferowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
+                                    if let err=err{
+                                        print("Error getting document\(err)")
+                                    }else{
+                                        
+                                        
+                                        
+                                        
+                                        for document in snabshot!.documents{
+                                            let result = Result {
+                                                try document.data(as: TaskOffer.self)
                                             }
-                                        case .failure(let error):
-                                            print("Error decoding Task \(error)")
+                                            switch result{
+                                            case .success(let taskoffer):
+                                                if let tskoffer = taskoffer{
+                                                    //check if I gave an accepted offer to this task
+                                                    
+                                                    if !tasksIWillMake.entries.contains(tsk) {
+                                                        tasksIWillMake.entries.append(tsk)
+                                                    }
+                                                    
+                                                    //print("\(task)")
+                                                }else{
+                                                    print("Document does not exists")
+                                                }
+                                            case .failure(let error):
+                                                print("Error decoding Task \(error)")
+                                            }
                                         }
+                                        
                                     }
                                     
                                 }
                                 
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                //print("\(task)")
+                            }else{
+                                print("Document does not exists")
                             }
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            //print("\(task)")
-                        }else{
-                            print("Document does not exists")
+                        case .failure(let error):
+                            print("Error decoding Task \(error)")
                         }
-                    case .failure(let error):
-                        print("Error decoding Task \(error)")
                     }
+                    
                 }
                 
             }
             
+            
         }
         
         
+        
+        
+        
+        
+        
+        
     }
-    
-   
-    
-    
-    
-    
-    
-    
-}
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
@@ -249,6 +255,8 @@ struct RowView : View {
     @State private var thistaskhasoffers : Bool = false
     @State  var taskstatus = TaskStatus.taskinitializedbuthasnotoffers
     @State var TaskUser : String = "hhhh"
+
+  
     
     var body: some View {
         HStack{
@@ -397,4 +405,3 @@ struct RowView : View {
     
     
 }
-
