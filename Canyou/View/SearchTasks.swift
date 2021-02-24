@@ -123,7 +123,10 @@ struct SearchTasks: View {
                                 }else{
 
                                     if snabshot!.isEmpty{
-                                        tasks.entries.append(task)
+                                        if !tasks.entries.contains(task){
+                                            tasks.entries.append(task)
+                                        }
+                                        
                                         return
                                     }
                                     
