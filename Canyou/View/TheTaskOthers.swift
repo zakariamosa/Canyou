@@ -14,6 +14,8 @@ struct TheTaskOthersView: View {
     @State private var taskname : String = ""
     @State private var taskdetails : String = ""
     @State private var taskOffer : String = ""
+    @State private var taskownerfirstname : String = ""
+    @State private var taskownerlastname : String = ""
     var task : Task? = nil
     var tasks : Tasks
     @State private var tasksOffers = TasksOffers()
@@ -31,6 +33,22 @@ and this is my Offer ....
         VStack{
             HStack{
             FirebaseImageViewSmall(imageURL: imageURL)
+                VStack{
+                Text(taskownerfirstname)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 200, height: 50)
+                    .background(Color.purple)
+                        .cornerRadius(15.0)
+                Text(taskownerlastname)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 200, height: 50)
+                        .background(Color.purple)
+                        .cornerRadius(15.0)
+                }
             }
             
                 Text(taskname)
@@ -54,7 +72,7 @@ and this is my Offer ....
                     .foregroundColor(.white)
                     .padding()
                     .frame(width: 300, height: 200)
-                    .background(Color.green)
+                .background(Color.orange)
                     .cornerRadius(15.0)
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)
@@ -75,9 +93,41 @@ and this is my Offer ....
                     /*if (tasksOffers.entries.count>0){
                         taskOffer = tasksOffers.entries[0].taskofferdetails
                     }*/
+                    loadTaskOwnerData(task: tsk)
                 }
                 loadImageFromFirebase()
             }
+        }
+    }
+    
+    func loadTaskOwnerData(task: Task){
+        db.collection("Users").whereField("userid", isEqualTo: task.taskowneruid).addSnapshotListener{(snabshot,err) in
+            if let err=err{
+                print("Error getting document\(err)")
+            }else{
+                
+                
+                
+                
+                for document in snabshot!.documents{
+                    let result = Result {
+                        try document.data(as: User.self)
+                    }
+                    switch result{
+                    case .success(let user):
+                        if let usr = user{
+                            taskownerfirstname = usr.firstname
+                            taskownerlastname = usr.lastname
+                        }else{
+                            print("Document does not exists")
+                        }
+                    case .failure(let error):
+                        print("Error decoding Task \(error)")
+                    }
+                }
+                
+            }
+            
         }
     }
     
