@@ -14,22 +14,30 @@ import Firebase
 struct InitialView: View {
     
     @State var status = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
+    @State var userhasaphoto = UserDefaults.standard.value(forKey: "userhasaphoto") as? Bool ?? false
     
     var body: some View {
        
         VStack{
             
-            if status{
-                
-                Home()
-               
-            }
-            else{
+            if !status{
                 
                 NavigationView{
                     
                     ContentView()
+                   
                 }
+                
+               
+            }else if status && !userhasaphoto{
+                NavigationView{
+                UserPhoto()
+                }
+               
+            }
+            else{
+                
+               Home()
             }
             
         }.onAppear {

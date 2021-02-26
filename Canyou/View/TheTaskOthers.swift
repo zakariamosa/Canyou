@@ -17,7 +17,7 @@ struct TheTaskOthersView: View {
     var task : Task? = nil
     var tasks : Tasks
     @State private var tasksOffers = TasksOffers()
-    
+    @State var imageURL = ""
     var yesICanDoItString = "Yes I can, and my Offer ...."/*"""
 Yes I can do it!
 and this is my Offer ....
@@ -29,6 +29,9 @@ and this is my Offer ....
         
         
         VStack{
+            HStack{
+            FirebaseImageViewSmall(imageURL: imageURL)
+            }
             
                 Text(taskname)
                         .font(.headline)
@@ -73,6 +76,7 @@ and this is my Offer ....
                         taskOffer = tasksOffers.entries[0].taskofferdetails
                     }*/
                 }
+                loadImageFromFirebase()
             }
         }
     }
@@ -150,5 +154,24 @@ and this is my Offer ....
     
     
 }
+    
+    
+    
+    func loadImageFromFirebase() {
+        let currentuserid : String = task!.taskowneruid
+        let FILE_NAME = "images/\(currentuserid) /userphoto.jpg"
+        let storage = Storage.storage().reference(withPath: FILE_NAME)
+        storage.downloadURL { (url, error) in
+            if error != nil {
+                print((error?.localizedDescription)!)
+                return
+            }
+            print("Download success")
+            self.imageURL = "\(url!)"
+            
+            
+        }
+    }
+    
 
 }

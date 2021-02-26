@@ -12,22 +12,30 @@ import Firebase
 struct RegisterationView: View {
     
     @State var status = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
+    @State var userhasaphoto = UserDefaults.standard.value(forKey: "userhasaphoto") as? Bool ?? false
     @EnvironmentObject var currentusers : Users
     
     var body: some View {
        
         VStack{
             
-            if status{
-                
-                Home()
-            }
-            else{
+            if !status{
                 
                 NavigationView{
                     
                     FirstPage().environmentObject(currentusers)
                 }
+                
+               
+            }else if status && !userhasaphoto{
+                NavigationView{
+                UserPhoto()
+                }
+               
+            }
+            else{
+                
+                Home()
             }
             
         }.onAppear {
@@ -193,6 +201,40 @@ struct ScndPage : View {
                             let currentuserid : String = (Auth.auth().currentUser?.uid)!
                             let currentuserphonenumber : String = (Auth.auth().currentUser?.phoneNumber)!
                             db.collection("Users").addDocument(data: ["firstname":"\(currentusers.entries[0].firstname)", "lastname":"\(currentusers.entries[0].lastname)", "userid":"\(currentuserid)", "phonenumber":"\(currentuserphonenumber)"])
+                            
+                            
+                            
+                            
+                            /*db.collection("Users").whereField("userid", isEqualTo: currentuserid).addSnapshotListener{(snabshot,err) in
+                                if let err=err{
+                                    print("Error getting document\(err)")
+                                }else{
+                                    for document in snabshot!.documents{
+                                        let result = Result {
+                                            try document.data(as: User.self)
+                                        }
+                                        switch result{
+                                        case .success(let user):
+                                            if let usr = user{
+                                                //update user
+                                                db.collection("Users").document(usr.id!).updateData(["firstname":"\(currentusers.entries[0].firstname)", "lastname":"\(currentusers.entries[0].lastname)"])
+                                                
+                                            }else{
+                                                db.collection("Users").addDocument(data: ["firstname":"\(currentusers.entries[0].firstname)", "lastname":"\(currentusers.entries[0].lastname)", "userid":"\(currentuserid)", "phonenumber":"\(currentuserphonenumber)"])
+                                            }
+                                        case .failure(let error):
+                                            print("Error decoding Task \(error)")
+                                        }
+                                    }
+                                    
+                                }
+                                
+                            }*/
+                            
+                            
+                            
+                            
+                            
                         }
                         
                     }) {
@@ -211,7 +253,6 @@ struct ScndPage : View {
             }
             
             Button(action: {
-                
                 self.show.toggle()
                 
             }) {
@@ -227,6 +268,9 @@ struct ScndPage : View {
             Alert(title: Text("Error"), message: Text(self.msg), dismissButton: .default(Text("Ok")))
         }
     }
+    
+    
+    
 }
 
 

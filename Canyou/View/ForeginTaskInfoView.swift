@@ -22,6 +22,7 @@ struct ForeginTaskInfoView: View {
     @State private var myOffer : String = ""
     @State private var taskDetails : String = ""
     @Environment(\.presentationMode) var presentationMode
+    @State var imageURL = ""
     
     
     var body: some View {
@@ -30,6 +31,8 @@ struct ForeginTaskInfoView: View {
         
         
         VStack{
+            
+            FirebaseImageViewSmall(imageURL: imageURL)
             
             Text(TaskOwnerFirstName)
                         .font(.headline)
@@ -86,6 +89,7 @@ struct ForeginTaskInfoView: View {
                 })
         .onAppear(){
             readOfferDetails()
+            loadImageFromFirebase()
         }
     }
         
@@ -93,7 +97,21 @@ struct ForeginTaskInfoView: View {
     
     
         
-        
+    func loadImageFromFirebase() {
+        let currentuserid : String = task!.taskowneruid
+        let FILE_NAME = "images/\(currentuserid) /userphoto.jpg"
+        let storage = Storage.storage().reference(withPath: FILE_NAME)
+        storage.downloadURL { (url, error) in
+            if error != nil {
+                print((error?.localizedDescription)!)
+                return
+            }
+            print("Download success")
+            self.imageURL = "\(url!)"
+            
+            
+        }
+    }
        
     
     
