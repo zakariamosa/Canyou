@@ -29,6 +29,9 @@ struct FirebaseImageView: View {
                 .padding(.bottom, 50)
         }.onReceive(imageLoader.didChange) { data in
             self.image = UIImage(data: data) ?? UIImage()
+            
+            UserDefaults.standard.set(true, forKey: "userhasaphoto")
+            NotificationCenter.default.post(name: NSNotification.Name("statusChange"), object: nil)
         }
     }
 }

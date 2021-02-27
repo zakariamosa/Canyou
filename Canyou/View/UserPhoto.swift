@@ -23,7 +23,7 @@ struct UserPhoto: View {
             if imageURL != "" {
                 FirebaseImageView(imageURL: imageURL)
             }
-            NavigationLink(destination: Home(),isActive: $nowuserhasaphoto) {
+            //NavigationLink(destination: Home(),isActive: $nowuserhasaphoto) {
             Button(action:
                     {
                         
@@ -38,7 +38,7 @@ struct UserPhoto: View {
             }.sheet(isPresented: $shown) {
                 imagePicker(shown: self.$shown,imageURL: self.$imageURL)
                 }.padding(10).background(Color.purple).foregroundColor(Color.white).cornerRadius(20)
-            }
+            //}
         }.onAppear(perform: loadImageFromFirebase).animation(.spring())
     }
     

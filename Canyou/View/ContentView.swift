@@ -47,6 +47,8 @@ struct InitialView: View {
                let status = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
                    
                 self.status = status
+                let userhasaphoto = UserDefaults.standard.value(forKey: "userhasaphoto") as? Bool ?? false
+                self.userhasaphoto = userhasaphoto
             }
         }
        
