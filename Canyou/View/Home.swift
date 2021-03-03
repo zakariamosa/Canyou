@@ -123,7 +123,7 @@ struct Home: View {
             print("self.deviceDefaultPlace \(self.deviceDefaultPlace)")
         }else{
             //locationManager.askForPermission()
-            getLocation()
+            //getLocation()
         }
         
         

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import CoreLocation
 
 
 struct SearchTasks: View {
@@ -97,7 +98,10 @@ struct SearchTasks: View {
         
     }
     func readTasks(){
-        
+        let currentuserdevicelocationlatitude = UserDefaults.standard.value(forKey: "devicelat") as? Double ?? 33.33
+        let currentuserdevicelocationlongetude = UserDefaults.standard.value(forKey: "devicelong") as? Double ?? 17.888
+        var accepteddistancebetweentheclientandtheownerinmiles = 10.0 // miles
+        let coordinate0 = CLLocation(latitude: currentuserdevicelocationlatitude, longitude: currentuserdevicelocationlongetude)
         db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
             if let err=err{
                 print("Error getting document\(err)")
@@ -114,7 +118,7 @@ struct SearchTasks: View {
                             //tasks.entries.append(task)
                             
                             
-                            
+                            accepteddistancebetweentheclientandtheownerinmiles = task.taskzoneinmiles
                             
                             
                             db.collection("TasksOffers").whereField("taskid", isEqualTo: task.id).whereField("taskofferowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).whereField("taskofferaccepted", isEqualTo: true).addSnapshotListener{(snabshot,err) in
@@ -133,7 +137,16 @@ struct SearchTasks: View {
                                             tasks.entries.append(task)
                                         }*/
                                         if !taskexists {
-                                            tasks.entries.append(task)
+                                            //check distance
+                                            let coordinate1 = CLLocation(latitude: task.taskPlace.latitude, longitude: task.taskPlace.longitude)
+                                            let distanceInMeters = coordinate0.distance(from: coordinate1)
+                                            if ((distanceInMeters / 1609 < accepteddistancebetweentheclientandtheownerinmiles)) {
+                                                print("???? \(distanceInMeters / 1609)")
+                                                print("????lat \(currentuserdevicelocationlatitude)")
+                                                print("????long \(currentuserdevicelocationlongetude)")
+                                                tasks.entries.append(task)
+                                            }
+                                            
                                         }
                                         
                                         return

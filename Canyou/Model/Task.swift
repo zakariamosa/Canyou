@@ -15,4 +15,5 @@ struct Task : Codable, Identifiable, Equatable{
     var done : Bool = false
     var taskowneruid : String = ""
     var taskPlace : Place
+    var taskzoneinmiles : Double = 10.0 //search tasks close with taskzone im miles
 }
