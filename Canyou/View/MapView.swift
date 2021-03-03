@@ -22,7 +22,7 @@ struct MapView : UIViewRepresentable{
     func makeUIView(context: UIViewRepresentableContext<MapView>) -> MKMapView {
         
         let map = MKMapView()
-        let coordinate = CLLocationCoordinate2D(latitude: UserDefaults.standard.value(forKey: "devicelat") as? Double ?? 33.33, longitude: UserDefaults.standard.value(forKey: "devicelong") as? Double ?? 17.888)
+        let coordinate = CLLocationCoordinate2D(latitude: UserDefaults.standard.value(forKey: "devicelat") as? Double ?? 59.363468, longitude: UserDefaults.standard.value(forKey: "devicelong") as? Double ?? 17.903887)
         map.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
         
         let annotation = MKPointAnnotation()

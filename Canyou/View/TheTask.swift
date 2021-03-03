@@ -22,19 +22,19 @@ struct TheTaskView: View {
     @ObservedObject var taskoffers=TasksOffers()
     @State private var isPresenting = false
     @Environment(\.presentationMode) var presentationMode
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.33233141, longitude: -122.0312186), span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 59.363468, longitude: 17.903887), span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
     @State private var places = [
-        Place(name: "Neighbour", latitude: 37.33233141, longitude: -122.032)/*,
+        Place(name: "Neighbour", latitude: 59.363468, longitude: 17.903887)/*,
         Place(name: "Nice place", latitude: 37.33233141, longitude: -122.030),
         Place(name: "Food", latitude: 37.33233141, longitude: -122.029)*/
     ]
     
     @State var title = ""
     @State var subtitle = ""
-    @State var selctedLatitude = 37.33233141
-    @State var selctedLongitude = -122.032
-    @State var taskPlaceLatitude = 37.33233141
-    @State var taskPlaceLongitude = -122.032
+    @State var selctedLatitude = 59.363468
+    @State var selctedLongitude = 17.903887
+    @State var taskPlaceLatitude = 59.363468
+    @State var taskPlaceLongitude = 17.903887
     
     var body: some View {
         

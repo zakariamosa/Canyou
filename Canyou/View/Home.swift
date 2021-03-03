@@ -22,11 +22,11 @@ struct Home: View {
     @State private var selectedAnotherItem: String? = ""
     @State var deviceDefaultPlace: Place = Place(name: "deviceDefaultPlace", latitude: 37.332331, longitude: -122.034)
     
+    
     let locationManager = LocationManager()
     
     var body: some View {
         NavigationView{
-            
             List(){
                 ForEach(tasks.entries){task in
                     NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask, task: task, tasks: tasks, taskPlace: self.deviceDefaultPlace), tag: task.id!, selection: $selectedItem){
@@ -79,20 +79,22 @@ struct Home: View {
             
             .navigationBarTitle("Home")
             
+            
             .toolbar{
                 ToolbarItem(placement: .bottomBar){
                     HStack{
                         
                         
-                        /*Button(action: {
+                        Button(action: {
                             
                         }, label: {
-                            NavigationLink(destination: Home()){
-                                Image(systemName: "house.circle").font(.system(size: 50))
+                            NavigationLink(destination: Settings()){
+                                //FirebaseImageViewSmall(imageURL: imageURL)
+                                Image(systemName: "gearshape").font(.system(size: 50))
                                 
                             }
                         })
-                        Spacer()*/
+                        Spacer()
                         
                         Button(action: {
                             
@@ -114,6 +116,8 @@ struct Home: View {
         }//.frame(width: 300, height: 700, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         
     }
+    
+    
     
     func getLocation(){
        

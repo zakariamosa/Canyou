@@ -18,6 +18,7 @@ struct UserPhoto: View {
     @State var imageURL = ""
     
     @State var nowuserhasaphoto:Bool = false
+    
     var body: some View {
         VStack {
             if imageURL != "" {
@@ -28,7 +29,9 @@ struct UserPhoto: View {
                     {
                         
                         self.shown.toggle()
+                        
                         self.nowuserhasaphoto.toggle()
+                        
                         
                     }) {
                 Text("Upload Image").font(.title).bold()
