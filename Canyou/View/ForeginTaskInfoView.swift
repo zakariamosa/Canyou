@@ -13,6 +13,7 @@ struct ForeginTaskInfoView: View {
     var db=Firestore.firestore()
     
     @Binding var showingAnotherPersonsTask: Bool
+    
     var task : Task? = nil
     
     
@@ -23,6 +24,7 @@ struct ForeginTaskInfoView: View {
     @State private var taskDetails : String = ""
     @Environment(\.presentationMode) var presentationMode
     @State var imageURL = ""
+    @State private var goToMap = false
     
     
     var body: some View {
@@ -55,11 +57,23 @@ struct ForeginTaskInfoView: View {
                         .frame(width: 300, height: 50)
                         .background(Color.green)
                         .cornerRadius(15.0)
+            NavigationLink(destination: TaskLocationsView(task: task!), isActive: $goToMap) {
+                Text("Task Location")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 300, height: 50)
+                        .background(Color.red)
+                        .cornerRadius(15.0)
+                         .onTapGesture {
+                            goToMap = true
+                         }
+                     }
             Text(taskDetails)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .frame(width: 300, height: 200)
+                        .frame(width: 300, height: 150)
                         .background(Color.green)
                         .cornerRadius(15.0)
             Text(myOffer)
@@ -84,7 +98,7 @@ struct ForeginTaskInfoView: View {
         } 
         .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: MyBackButton(label: "Back!") {
-                    //showingAnotherPersonsTask = false
+                    showingAnotherPersonsTask = false
                     presentationMode.wrappedValue.dismiss()
                 })
         .onAppear(){

@@ -14,4 +14,5 @@ struct Task : Codable, Identifiable, Equatable{
     var taskdetails : String
     var done : Bool = false
     var taskowneruid : String = ""
+    var taskPlace : Place
 }

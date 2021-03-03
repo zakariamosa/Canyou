@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import MapKit
 
 struct TheTaskView: View {
     var db=Firestore.firestore()
@@ -17,10 +18,23 @@ struct TheTaskView: View {
     @State private var taskdetails : String = ""
     var task : Task? = nil
     var tasks : Tasks
+    var taskPlace : Place
     @ObservedObject var taskoffers=TasksOffers()
     @State private var isPresenting = false
     @Environment(\.presentationMode) var presentationMode
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.33233141, longitude: -122.0312186), span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
+    @State private var places = [
+        Place(name: "Neighbour", latitude: 37.33233141, longitude: -122.032)/*,
+        Place(name: "Nice place", latitude: 37.33233141, longitude: -122.030),
+        Place(name: "Food", latitude: 37.33233141, longitude: -122.029)*/
+    ]
     
+    @State var title = ""
+    @State var subtitle = ""
+    @State var selctedLatitude = 37.33233141
+    @State var selctedLongitude = -122.032
+    @State var taskPlaceLatitude = 37.33233141
+    @State var taskPlaceLongitude = -122.032
     
     var body: some View {
         
@@ -45,8 +59,38 @@ struct TheTaskView: View {
                 .cornerRadius(15.0)
                 .multilineTextAlignment(.center)
             
+            
+            /*Map(coordinateRegion: $region, annotationItems: places) { place in
+               
+                MapAnnotation(coordinate: place.coordinate, anchorPoint: CGPoint(x: 0.5, y: 0.5)) {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                }
+            }*/
+            ZStack(alignment: .bottom, content: {
+                MapView(title: self.$title, subtitle: self.$subtitle, selctedLatitude: self.$selctedLatitude, selctedLongitude: self.$selctedLongitude)
+                if self.title != ""{
+                    HStack(spacing: 12){
+                        Image(systemName: "info.circle.fill").font(.largeTitle).foregroundColor(.black)
+                        VStack(alignment: .leading, spacing: 15){
+                            Text(self.title).font(.body).foregroundColor(.black)
+                            Text(self.subtitle).font(.caption).foregroundColor(.gray)
+                            let str1 = String(self.selctedLatitude)
+                            let str2 = String(self.selctedLongitude)
+                            Text(str1).font(.caption).foregroundColor(.gray)
+                            Text(str2).font(.caption).foregroundColor(.gray)
+                        }
+                    }.padding()
+                    .background(Color("Color"))
+                    .cornerRadius(15)
+                }
+            })
+            
+            
             //NavigationView{
-                
+            .navigationBarTitle("Task Details")
+            if taskoffers.entries.count>0{
             Text("Task offers !!!")
                 .font(.headline)
                 .foregroundColor(.white)
@@ -66,9 +110,9 @@ struct TheTaskView: View {
                     }
                 }
               
-                
+            }
             
-            .navigationBarTitle("Task Details")
+            
             
             
         }
@@ -96,6 +140,23 @@ struct TheTaskView: View {
                 readTaskOffers(taskid: tsk.id!)
                 print("taskoffers entries count on appear\(taskoffers.entries.count)")
                 print("task id on appear\(tsk.id)")
+                region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: tsk.taskPlace.latitude, longitude: tsk.taskPlace.longitude), span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
+                let taskplace = Place(name: "This Task", latitude: tsk.taskPlace.latitude, longitude: tsk.taskPlace.longitude)
+                places.removeAll()
+                places.append(taskplace)
+                taskPlaceLatitude = tsk.taskPlace.latitude
+                taskPlaceLongitude = tsk.taskPlace.longitude
+                
+            }else{
+                region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: taskPlace.latitude, longitude: taskPlace.longitude), span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
+                let currentplace = Place(name: "This Task", latitude: taskPlace.latitude, longitude: taskPlace.longitude)
+                places.removeAll()
+                places.append(currentplace)
+                print("taskPlace.latitude \(places[0].latitude)")
+                print("taskPlace.longitude \(self.taskPlace.longitude)")
+                taskPlaceLatitude = taskPlace.latitude
+                taskPlaceLongitude = taskPlace.longitude
+                print("taskPlaceLatitude \(taskPlaceLatitude)")
             }
         }
     }
@@ -128,7 +189,7 @@ struct TheTaskView: View {
     }
     
     func addTask(){
-        let task = Task(taskname: taskname, taskdetails: taskdetails, taskowneruid: (Auth.auth().currentUser?.uid)!)
+        let task = Task(taskname: taskname, taskdetails: taskdetails, taskowneruid: (Auth.auth().currentUser?.uid)!,taskPlace: Place(name: "Task Location", latitude: self.selctedLatitude/*self.taskPlace.latitude*/, longitude: self.selctedLongitude/*self.taskPlace.longitude*/))
         do{
             _ = try db.collection("Tasks").addDocument(from: task)
             

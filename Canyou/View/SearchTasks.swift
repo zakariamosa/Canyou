@@ -123,7 +123,16 @@ struct SearchTasks: View {
                                 }else{
 
                                     if snabshot!.isEmpty{
-                                        if !tasks.entries.contains(task){
+                                        var taskexists: Bool = false
+                                        for singelTask in tasks.entries {
+                                            if singelTask.id == task.id {
+                                                taskexists = true
+                                            }
+                                        }
+                                        /*if !tasks.entries.contains(task){
+                                            tasks.entries.append(task)
+                                        }*/
+                                        if !taskexists {
                                             tasks.entries.append(task)
                                         }
                                         

@@ -24,7 +24,7 @@ struct TheTaskOthersView: View {
 Yes I can do it!
 and this is my Offer ....
 """*/
-    
+    @State private var goToMap = false
     var body: some View {
         
         
@@ -66,16 +66,36 @@ and this is my Offer ....
                         .background(Color.green)
                         .cornerRadius(15.0)
                     .multilineTextAlignment(.center)
+            
+            NavigationLink(destination: TaskLocationsView(task: task!), isActive: $goToMap) {
+                Text("Task Location")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 300, height: 50)
+                        .background(Color.red)
+                        .cornerRadius(15.0)
+                         .onTapGesture {
+                            goToMap = true
+                         }
+                     }
+            
+            
             TextField(yesICanDoItString,text: $taskOffer)
             
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding()
-                    .frame(width: 300, height: 200)
+                    .frame(width: 300, height: 170)
                 .background(Color.orange)
                     .cornerRadius(15.0)
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)
+            
+            
+            
+            
+            
             
         
         } .navigationBarItems(trailing: Button(action: {

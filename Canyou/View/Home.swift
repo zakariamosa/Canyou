@@ -16,16 +16,20 @@ struct Home: View {
     @ObservedObject var tasksIWillMake = Tasks()
     @State private var showingMyOwnTask = false
     @State private var showingAnotherPersonsTask = false
+    @State private var goToTask = false
 
     @State private var selectedItem: String? = ""
     @State private var selectedAnotherItem: String? = ""
+    @State var deviceDefaultPlace: Place = Place(name: "deviceDefaultPlace", latitude: 37.332331, longitude: -122.034)
+    
+    let locationManager = LocationManager()
     
     var body: some View {
         NavigationView{
             
             List(){
                 ForEach(tasks.entries){task in
-                    NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask, task: task, tasks: tasks), tag: task.id!, selection: $selectedItem){
+                    NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask, task: task, tasks: tasks, taskPlace: self.deviceDefaultPlace), tag: task.id!, selection: $selectedItem){
                         RowView(task: task).onTapGesture {
                             self.selectedItem = task.id
                             showingMyOwnTask = true
@@ -57,13 +61,17 @@ struct Home: View {
                 
                 
             }
-            .navigationBarItems(trailing: NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask,tasks: tasks)){
-                Image(systemName: "plus.circle").font(.system(size: 30))
+            .navigationBarItems(trailing: NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask,tasks: tasks, taskPlace: self.deviceDefaultPlace), isActive: $goToTask){
+                Image(systemName: "plus.circle").font(.system(size: 30)).onTapGesture {
+                    getLocation()
+                    self.goToTask = true
+                }
             })
   
             .onAppear(){
                 readTasks()
                 readTasksIWillMake()
+                locationManager.askForPermission()
                 
             }
             
@@ -106,6 +114,22 @@ struct Home: View {
         }//.frame(width: 300, height: 700, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         
     }
+    
+    func getLocation(){
+       
+        if let location = locationManager.location {
+            let taskPlace = Place(name: "Task Location", latitude: location.latitude, longitude: location.longitude)
+            self.deviceDefaultPlace = taskPlace
+            print("self.deviceDefaultPlace \(self.deviceDefaultPlace)")
+        }else{
+            //locationManager.askForPermission()
+            getLocation()
+        }
+        
+        
+        
+    }
+    
     
     
     func delete(rowindex: IndexSet){
@@ -185,7 +209,7 @@ struct Home: View {
                                     }else{
                                         
                                         
-                                        
+                                        var taskofferexists: Bool = false
                                         
                                         for document in snabshot!.documents{
                                             let result = Result {
@@ -195,10 +219,17 @@ struct Home: View {
                                             case .success(let taskoffer):
                                                 if let tskoffer = taskoffer{
                                                     //check if I gave an accepted offer to this task
-                                                    
-                                                    if !tasksIWillMake.entries.contains(tsk) {
+                                                    for singelTaskOffer in tasksIWillMake.entries {
+                                                        if singelTaskOffer.id == tskoffer.taskid {
+                                                            taskofferexists = true
+                                                        }
+                                                    }
+                                                    if !taskofferexists {
                                                         tasksIWillMake.entries.append(tsk)
                                                     }
+                                                    /*if !tasksIWillMake.entries.contains(tsk) {
+                                                        tasksIWillMake.entries.append(tsk)
+                                                    }*/
                                                     
                                                     //print("\(task)")
                                                 }else{
