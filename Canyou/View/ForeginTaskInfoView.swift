@@ -33,30 +33,32 @@ struct ForeginTaskInfoView: View {
         
         
         VStack{
-            
+            HStack{
             FirebaseImageViewSmall(imageURL: imageURL)
-            
+                VStack{
             Text(TaskOwnerFirstName)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .frame(width: 300, height: 50)
+                        .frame(width: 200, height: 50)
                         .background(Color.green)
                         .cornerRadius(15.0)
             Text(TaskOwnerLastName)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .frame(width: 300, height: 50)
-                        .background(Color.green)
+                        .frame(width: 200, height: 50)
+                        .background(Color.blue)
                         .cornerRadius(15.0)
             Text(TaskOwnerCellPhone)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .frame(width: 300, height: 50)
-                        .background(Color.green)
+                        .frame(width: 200, height: 50)
+                        .background(Color.orange)
                         .cornerRadius(15.0)
+            }
+            }
             NavigationLink(destination: TaskLocationsView(task: task!), isActive: $goToMap) {
                 Text("Task Location")
                         .font(.headline)

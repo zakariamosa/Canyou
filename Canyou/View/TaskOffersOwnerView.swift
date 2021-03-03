@@ -20,6 +20,7 @@ struct TaskOffersOwnerView: View {
     @State private var offerUserFirstName : String = ""
     @State private var offerUserLastName : String = ""
     @State private var offerUserPhoneNumber : String = ""
+    @State var imageURL = ""
     
     
     var body: some View {
@@ -28,34 +29,39 @@ struct TaskOffersOwnerView: View {
         
         
         VStack{
+            HStack{
+            FirebaseImageViewSmall(imageURL: imageURL)
+                VStack{
+                    Text(offerUserFirstName)
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 200, height: 50)
+                                .background(Color.green)
+                                .cornerRadius(15.0)
+                    Text(offerUserLastName)
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 200, height: 50)
+                                .background(Color.blue)
+                                .cornerRadius(15.0)
+                    Text(offerUserPhoneNumber)
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 200, height: 50)
+                                .background(Color.orange)
+                                .cornerRadius(15.0)
+            }
+            }
             
-            Text(offerUserFirstName)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 300, height: 50)
-                        .background(Color.green)
-                        .cornerRadius(15.0)
-            Text(offerUserLastName)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 300, height: 50)
-                        .background(Color.green)
-                        .cornerRadius(15.0)
-            Text(offerUserPhoneNumber)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 300, height: 50)
-                        .background(Color.green)
-                        .cornerRadius(15.0)
             Text(taskoffer.taskofferdetails)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
                         .frame(width: 300, height: 50)
-                        .background(Color.green)
+                        .background(Color.purple)
                         .cornerRadius(15.0)
                 
             VStack{
@@ -98,6 +104,7 @@ struct TaskOffersOwnerView: View {
                 print("taskoffers entries count on appear\(taskoffers.entries.count)")
                 print("task id on appear\(tsk.id)")
             }*/
+            loadImageFromFirebase()
         }
     }
         
@@ -157,7 +164,21 @@ struct TaskOffersOwnerView: View {
        
     }
     
-    
+        func loadImageFromFirebase() {
+            let currentuserid : String = taskoffer.taskofferowneruid
+            let FILE_NAME = "images/\(currentuserid) /userphoto.jpg"
+            let storage = Storage.storage().reference(withPath: FILE_NAME)
+            storage.downloadURL { (url, error) in
+                if error != nil {
+                    print((error?.localizedDescription)!)
+                    return
+                }
+                print("Download success")
+                self.imageURL = "\(url!)"
+                
+                
+            }
+        }
     
 }
 
