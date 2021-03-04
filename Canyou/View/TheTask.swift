@@ -35,7 +35,7 @@ struct TheTaskView: View {
     @State var selctedLongitude = 17.903887
     @State var taskPlaceLatitude = 59.363468
     @State var taskPlaceLongitude = 17.903887
-    
+    @State var isTaskDone: Bool = false
     var body: some View {
         
         
@@ -54,7 +54,7 @@ struct TheTaskView: View {
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding()
-                .frame(width: 300, height: 200)
+                .frame(width: 300, height: 120)
                 .background(Color.green)
                 .cornerRadius(15.0)
                 .multilineTextAlignment(.center)
@@ -90,12 +90,33 @@ struct TheTaskView: View {
             
             //NavigationView{
             .navigationBarTitle("Task Details")
+            
+            ZStack{
+                        
+                        Toggle(isOn: $isTaskDone){
+                            Text("Task Done?")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 130, height: 50)
+                                .background(Color.purple)
+                                .cornerRadius(15.0)
+                        }
+                        
+                        Image(systemName: isTaskDone ? "lock.slash":"lock.open")
+                            .font(.system(size: 36))
+                            .foregroundColor(isTaskDone ? .blue : .red)
+                        
+                        
+                        
+                    }.padding()
+            
             if taskoffers.entries.count>0{
             Text("Task offers !!!")
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding()
-                .frame(width: 300, height: 50)
+                .frame(width: 180, height: 50)
                 .background(Color.orange)
                 .cornerRadius(15.0)
                 .multilineTextAlignment(.center)
@@ -146,6 +167,7 @@ struct TheTaskView: View {
                 places.append(taskplace)
                 taskPlaceLatitude = tsk.taskPlace.latitude
                 taskPlaceLongitude = tsk.taskPlace.longitude
+                isTaskDone = tsk.done
                 
             }else{
                 region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: taskPlace.latitude, longitude: taskPlace.longitude), span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04))
@@ -175,7 +197,7 @@ struct TheTaskView: View {
                 //tasks.entries[currentTaskIndex].taskname = self.taskname
                 //tasks.entries[currentTaskIndex].taskdetails = self.taskdetails
                 if let id=tasks.entries[currentTaskIndex].id{
-                    db.collection("Tasks").document(id).updateData(["taskname" : self.taskname, "taskdetails" : self.taskdetails])
+                    db.collection("Tasks").document(id).updateData(["taskname" : self.taskname, "taskdetails" : self.taskdetails, "done" : self.isTaskDone])
                 }
             }
             
@@ -189,7 +211,7 @@ struct TheTaskView: View {
     }
     
     func addTask(){
-        let task = Task(taskname: taskname, taskdetails: taskdetails, taskowneruid: (Auth.auth().currentUser?.uid)!,taskPlace: Place(name: "Task Location", latitude: self.selctedLatitude/*self.taskPlace.latitude*/, longitude: self.selctedLongitude/*self.taskPlace.longitude*/))
+        let task = Task(taskname: taskname, taskdetails: taskdetails,done: isTaskDone, taskowneruid: (Auth.auth().currentUser?.uid)!,taskPlace: Place(name: "Task Location", latitude: self.selctedLatitude/*self.taskPlace.latitude*/, longitude: self.selctedLongitude/*self.taskPlace.longitude*/))
         do{
             _ = try db.collection("Tasks").addDocument(from: task)
             

@@ -102,7 +102,7 @@ struct SearchTasks: View {
         let currentuserdevicelocationlongetude = UserDefaults.standard.value(forKey: "devicelong") as? Double ?? 17.888
         var accepteddistancebetweentheclientandtheownerinmiles = 10.0 // miles
         let coordinate0 = CLLocation(latitude: currentuserdevicelocationlatitude, longitude: currentuserdevicelocationlongetude)
-        db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).addSnapshotListener{(snabshot,err) in
+        db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).whereField("done", isEqualTo: false).addSnapshotListener{(snabshot,err) in
             if let err=err{
                 print("Error getting document\(err)")
             }else{

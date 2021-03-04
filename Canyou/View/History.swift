@@ -1,14 +1,15 @@
 //
-//  Home.swift
+//  History.swift
 //  Canyou
 //
-//  Created by Zakaria Mosa on 2021-02-02.
+//  Created by Zakaria Mosa on 2021-03-04.
 //
+
 import SwiftUI
 import Firebase
 
 
-struct Home: View {
+struct History: View {
     var db=Firestore.firestore()
     @State private var taskname : String = (Auth.auth().currentUser?.phoneNumber)!//"taskName"
     @State private var taskdetails : String = "taskDetails"
@@ -30,7 +31,7 @@ struct Home: View {
             List(){
                 ForEach(tasks.entries){task in
                     NavigationLink(destination: TheTaskView(showingMyOwnTask: $showingMyOwnTask, task: task, tasks: tasks, taskPlace: self.deviceDefaultPlace), tag: task.id!, selection: $selectedItem){
-                        RowView(task: task).onTapGesture {
+                        RowViewHistory(task: task).onTapGesture {
                             self.selectedItem = task.id
                             showingMyOwnTask = true
                         }
@@ -49,7 +50,7 @@ struct Home: View {
                 
                 ForEach(tasksIWillMake.entries){task in
                     NavigationLink(destination: ForeginTaskInfoView(showingAnotherPersonsTask: $showingAnotherPersonsTask, task: task), tag: task.id!, selection: $selectedAnotherItem){
-                        RowView(task: task).onTapGesture {
+                        RowViewHistory(task: task).onTapGesture {
                             self.selectedAnotherItem = task.id
                             showingAnotherPersonsTask = true
                         }
@@ -77,51 +78,10 @@ struct Home: View {
             
             
             
-            .navigationBarTitle("Home")
+            .navigationBarTitle("History")
             
             
-            .toolbar{
-                ToolbarItem(placement: .bottomBar){
-                    HStack{
-                        
-                        
-                        Button(action: {
-                            
-                        }, label: {
-                            NavigationLink(destination: Settings()){
-                                //FirebaseImageViewSmall(imageURL: imageURL)
-                                Image(systemName: "gearshape").font(.system(size: 50))
-                                
-                            }
-                        })
-                        Spacer()
-                        
-                        Button(action: {
-                            
-                            
-                        }, label: {
-                            NavigationLink(destination: SearchTasks()){
-                                Image(systemName: "magnifyingglass.circle").font(.system(size: 50))
-                                
-                            }
-                        })
-                        Spacer()
-                        
-                        Button(action: {
-                            
-                            
-                        }, label: {
-                            NavigationLink(destination: History()){
-                                Image(systemName: "clock").font(.system(size: 50))
-                                
-                            }
-                        })
-                        Spacer()
-                        
-                        
-                    }
-                }
-            }
+           
             
             
         }//.frame(width: 300, height: 700, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -166,7 +126,7 @@ struct Home: View {
     }
     func readTasks(){
             
-        db.collection("Tasks").whereField("taskowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).whereField("done", isEqualTo: false).addSnapshotListener{(snabshot,err) in
+        db.collection("Tasks").whereField("taskowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).whereField("done", isEqualTo: true).addSnapshotListener{(snabshot,err) in
                 if let err=err{
                     print("Error getting document\(err)")
                 }else{
@@ -200,7 +160,7 @@ struct Home: View {
     
     func readTasksIWillMake(){
             
-            db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).whereField("done", isEqualTo: false).addSnapshotListener{(snabshot,err) in
+            db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).whereField("done", isEqualTo: true).addSnapshotListener{(snabshot,err) in
                 if let err=err{
                     print("Error getting document\(err)")
                 }else{
@@ -296,13 +256,9 @@ struct Home: View {
         
     }
 
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Home()
-    }
-}
 
-struct RowView : View {
+
+struct RowViewHistory : View {
     var db=Firestore.firestore()
     var task : Task
     @State private var thistaskhasoffers : Bool = false
@@ -458,3 +414,4 @@ struct RowView : View {
     
     
 }
+
