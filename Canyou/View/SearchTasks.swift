@@ -43,36 +43,7 @@ struct SearchTasks: View {
             
             .navigationBarTitle("Can you do any?")
             
-            .toolbar{
-                ToolbarItem(placement: .bottomBar){
-                    HStack{
-                        
-                        
-                        Button(action: {
-                            
-                        }, label: {
-                            NavigationLink(destination: Home()){
-                                Image(systemName: "house.circle").font(.system(size: 50))
-                                
-                            }
-                        })
-                        Spacer()
-                        
-                        /*Button(action: {
-                            
-                            
-                        }, label: {
-                            NavigationLink(destination: SearchTasks()){
-                                Image(systemName: "magnifyingglass.circle").font(.system(size: 50))
-                                
-                            }
-                        })
-                        Spacer()*/
-                        
-                        
-                    }
-                }
-            }
+            
             
             
         }//.frame(width: 300, height: 700, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -102,7 +73,7 @@ struct SearchTasks: View {
         let currentuserdevicelocationlongetude = UserDefaults.standard.value(forKey: "devicelong") as? Double ?? 17.888
         var accepteddistancebetweentheclientandtheownerinmiles = 10.0 // miles
         let coordinate0 = CLLocation(latitude: currentuserdevicelocationlatitude, longitude: currentuserdevicelocationlongetude)
-        db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!).whereField("done", isEqualTo: false).addSnapshotListener{(snabshot,err) in
+        db.collection("Tasks").whereField("taskowneruid", isNotEqualTo: (Auth.auth().currentUser?.uid)!)/*.whereField("done", isEqualTo: false)*/.addSnapshotListener{(snabshot,err) in
             if let err=err{
                 print("Error getting document\(err)")
             }else{
@@ -121,7 +92,7 @@ struct SearchTasks: View {
                             accepteddistancebetweentheclientandtheownerinmiles = task.taskzoneinmiles
                             
                             
-                            db.collection("TasksOffers").whereField("taskid", isEqualTo: task.id).whereField("taskofferowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!).whereField("taskofferaccepted", isEqualTo: true).addSnapshotListener{(snabshot,err) in
+                            db.collection("TasksOffers").whereField("taskid", isEqualTo: task.id)/*.whereField("taskofferowneruid", isEqualTo: (Auth.auth().currentUser?.uid)!)*/.whereField("taskofferaccepted", isEqualTo: true).addSnapshotListener{(snabshot,err) in
                                 if let err=err{
                                     print("Error getting document\(err)")
                                 }else{
@@ -144,7 +115,9 @@ struct SearchTasks: View {
                                                 print("???? \(distanceInMeters / 1609)")
                                                 print("????lat \(currentuserdevicelocationlatitude)")
                                                 print("????long \(currentuserdevicelocationlongetude)")
+                                                if !task.done{
                                                 tasks.entries.append(task)
+                                                }
                                             }
                                             
                                         }
